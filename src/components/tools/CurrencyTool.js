@@ -97,13 +97,14 @@ function CurrencyTool(props) {
 
     const clipboardButton =  () => {
         let text = "";
-        if(resultType=="gbpToHkd"){
+        if(resultType=="hkdToGbp"){
             text = "HK$"+hkdDollars+" -> £"+gbpPounds;
-        }else if(resultType=="hkdToGbp"){
+        }else if(resultType=="gbpToHkd"){
             text = "£"+gbpPounds+" -> HK$"+hkdDollars;
         }
-        text += "\n(£1 = HK$"+exchangeRateDisplayed+")"
-        
+        text += "\n(£1 = HK$"+exchangeRateDisplayed;
+        if(isCustom) text += "(custom)";
+        text+=")"
         navigator.clipboard.writeText(text);
         toast.success("Successfully copied to clipboard", {
             id: "successClipboard",
@@ -183,13 +184,13 @@ function CurrencyTool(props) {
 
             {/* Second line */}
             <div className="text-center icons">
-                <FontAwesomeIcon icon={faArrowAltCircleDown} className={"icon"+(resultType=="hkdToGbp" ? " icon-selected" : "")}/>
+                <FontAwesomeIcon icon={faArrowAltCircleDown} onClick={(e)=>{setIsResult(false)}} className={"icon"+(resultType=="hkdToGbp" ? " icon-selected" : "")}/>
                 <div>
                     <p className="mb-0">£ 1 = HK$ {exchangeRateDisplayed} {isCustom && <small className="custom">(custom)</small>}</p>
                     
                 </div>
                 
-                <FontAwesomeIcon icon={faArrowAltCircleUp} className={"icon"+(resultType=="gbpToHkd" ? " icon-selected": "")}/>
+                <FontAwesomeIcon icon={faArrowAltCircleUp} onClick={(e)=>{setIsResult(false)}} className={"icon"+(resultType=="gbpToHkd" ? " icon-selected": "")}/>
             </div>
             <br />
 
@@ -200,9 +201,9 @@ function CurrencyTool(props) {
             <br />
             {/* Fourth line */}
             <div className="text-center bottomButtons">
-                <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{screenshotButton()}}>Take Screenshot</Button>
+                <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{screenshotButton()}}>Screenshot</Button>
                 <Button variant="warning" className="bottomButton" onClick={(e)=>{setIsResult(false)}}>Edit</Button>
-                <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{clipboardButton()}}>Copy As Text</Button>
+                <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{clipboardButton()}}>Clipboard</Button>
             </div>
         </>
     )}
