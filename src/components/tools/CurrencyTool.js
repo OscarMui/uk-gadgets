@@ -84,6 +84,14 @@ function CurrencyTool(props) {
             link.download = 'currency.jpeg';
             link.href = dataUrl;
             link.click();
+            toast.success("Successfully took screenshot", {
+                id: "successScreenshot",
+            });
+        })
+        .catch((err)=>{
+            toast.error("Error taking screenshot", {
+                id: "errorScreenshot",
+            });
         });
     }
 
@@ -97,6 +105,9 @@ function CurrencyTool(props) {
         text += "\n(£1 = HK$"+exchangeRateDisplayed+")"
         
         navigator.clipboard.writeText(text);
+        toast.success("Successfully copied to clipboard", {
+            id: "successClipboard",
+        });
     }
 
     const CurrencyToolInput = () => {return(
