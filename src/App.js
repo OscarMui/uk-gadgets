@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import toast, { Toaster } from 'react-hot-toast';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+
+import CurrencyTool from './components/tools/CurrencyTool'
+import TimeTool from './components/tools/TimeTool';
+
+import './App.scss';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Toaster 
+        position="bottom-center"
+        toastOptions={{
+          style: {
+            margin: '50px',
+            borderRadius: '10px',
+            background: '#555',
+            color: '#fff',
+          },
+      }}/>
+      <div className="intro">
+        <h1>UK Gadgets</h1>
+        <p>Some small tools for Hongkongers that might be useful when studying/working in the UK.</p>
+      </div>
+      <Row className="tools">
+        <TimeTool />
+        <CurrencyTool />
+      </Row>
+    </Container>
   );
 }
 

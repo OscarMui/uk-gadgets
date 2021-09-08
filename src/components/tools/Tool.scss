@@ -1,0 +1,49 @@
+.tool{
+    border: 2px solid #AAA;
+    border-radius: 10px;
+    margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+    padding: 0.5rem;
+    height: 100%;
+    h2{
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+    input{
+        background-color: #555;
+        color: #FFF;
+        border: 1px solid #FFF;
+        border-radius: 3px;
+        margin-left: 0.3rem;
+        margin-right: 0.3rem;
+        padding: 0.375rem;
+    }
+    input:focus{
+        outline: #AAA auto 1px;
+    }
+    .icon{
+        font-size: 2rem;
+        margin: 0 0.5rem 0 0.5rem;
+    }
+    .saveButton{
+        width: 150px;
+    }
+    .bottomButtons, .icons{
+        display: flex;
+        justify-content: space-around;
+    }
+    .icon-selected{
+        color: #12de48;
+    }
+    #hkdDollars{
+        width: 150px;
+    }
+    #gbpPounds{
+        width: 173px;
+    }
+    #exchangeRateDisplayed{
+        width: 75px;
+    }
+    // #hkdCents{
+    //     width: 50px;
+    // }
+}

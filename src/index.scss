@@ -1,0 +1,20 @@
+//GOOGLE FONT
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&family=Noto+Serif+TC&display=swap');
+
+//BOOSTRAP V5
+@import "~bootstrap/scss/bootstrap";
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #333;
+  color: #FFF;
+  a{
+    text-decoration: none;
+  }
+  .minor{
+    color: #AAA;
+}
+}
