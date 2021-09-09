@@ -45,29 +45,53 @@ function CurrencyTool(props) {
     },[useEffectKey]);
 
     const hkdToGbp = () => {
-        if(exchangeRateDisplayed&&hkdDollars){
+        if(!exchangeRateDisplayed){
+            toast.error("Exchange rate is empty", {
+                id: "exchangeRateEmpty",
+            });
+        }else if(isNaN(exchangeRateDisplayed)||exchangeRateDisplayed<0){ //isNaN: return true if not a number
+            toast.error("Exchange rate is invalid", {
+                id: "exchangeRateInvalid",
+            });
+        }else if(!hkdDollars){
+            toast.error("HK$ is empty", {
+                id: "hkdDollarsEmpty",
+            });
+        }else if(isNaN(hkdDollars)||hkdDollars<0){ //isNaN: return true if not a number
+            toast.error("HK$ is invalid", {
+                id: "hkdDollarsInvalid",
+            });
+        }else{
             let exchangeRate = isCustom ? exchangeRateDisplayed : exchangeRateFetched;
             setGbpPounds(Math.round(hkdDollars/exchangeRate*100)/100); //2 d.p.
             setIsResult(true);
             setResultType("hkdToGbp");
-        }else{
-            toast.error("Some fields are empty", {
-                id: "fieldsEmpty",
-            });
         }
         
     }
 
     const gbpToHkd = () => {
-        if(exchangeRateDisplayed&&gbpPounds){
+        if(!exchangeRateDisplayed){
+            toast.error("Exchange rate is empty", {
+                id: "exchangeRateEmpty",
+            });
+        }else if(isNaN(exchangeRateDisplayed)||exchangeRateDisplayed<0){ //isNaN: return true if not a number
+            toast.error("Exchange rate is invalid", {
+                id: "exchangeRateInvalid",
+            });
+        }else if(!gbpPounds){
+            toast.error("£ is empty", {
+                id: "gbpPoundsEmpty",
+            });
+        }else if(isNaN(gbpPounds)||gbpPounds<0){ //isNaN: return true if not a number
+            toast.error("£ is invalid", {
+                id: "gbpPoundsInvalid",
+            });
+        }else{
             let exchangeRate = isCustom ? exchangeRateDisplayed : exchangeRateFetched;
             setHkdDollars(Math.round(gbpPounds*exchangeRate*10)/10); //1 d.p.
             setIsResult(true);
             setResultType("gbpToHkd");
-        }else{
-            toast.error("Some fields are empty", {
-                id: "fieldsEmpty",
-            });
         }
     }
 
@@ -119,7 +143,6 @@ function CurrencyTool(props) {
                 <input 
                     id="gbpPounds"
                     type="number"
-                    min={0}
                     value={gbpPounds}
                     onChange={(e)=>{setGbpPounds(e.target.value)}}
                 />
@@ -134,7 +157,6 @@ function CurrencyTool(props) {
                     <input 
                         id="exchangeRateDisplayed"
                         type="number"
-                        min={0}
                         value={exchangeRateDisplayed}
                         onChange={(e)=>{setExchangeRateDisplayed(e.target.value); setIsCustom(true);}}
                     />
@@ -150,7 +172,6 @@ function CurrencyTool(props) {
                 <input 
                     id="hkdDollars"
                     type="number"
-                    min={0}
                     value={hkdDollars}
                     onChange={(e)=>{setHkdDollars(e.target.value)}}
                 />
