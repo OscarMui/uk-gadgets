@@ -47,7 +47,7 @@ function CurrencyTool(props) {
     const hkdToGbp = () => {
         if(exchangeRateDisplayed&&hkdDollars){
             let exchangeRate = isCustom ? exchangeRateDisplayed : exchangeRateFetched;
-            setGbpPounds(Math.round(hkdDollars/exchangeRate*100)/100);
+            setGbpPounds(Math.round(hkdDollars/exchangeRate*100)/100); //2 d.p.
             setIsResult(true);
             setResultType("hkdToGbp");
         }else{
@@ -61,7 +61,7 @@ function CurrencyTool(props) {
     const gbpToHkd = () => {
         if(exchangeRateDisplayed&&gbpPounds){
             let exchangeRate = isCustom ? exchangeRateDisplayed : exchangeRateFetched;
-            setHkdDollars(Math.round(gbpPounds*exchangeRate*100)/100);
+            setHkdDollars(Math.round(gbpPounds*exchangeRate*10)/10); //1 d.p.
             setIsResult(true);
             setResultType("gbpToHkd");
         }else{
@@ -115,38 +115,6 @@ function CurrencyTool(props) {
         <form>
             {/* First line */}
             <div className="text-center">
-                <label htmlFor="hkdDollars">HK$</label>
-                <input 
-                    id="hkdDollars"
-                    type="number"
-                    min={0}
-                    value={hkdDollars}
-                    onChange={(e)=>{setHkdDollars(e.target.value)}}
-                />
-            </div>
-            <br />
-
-            {/* Second line */}
-            <div className="text-center icons">
-                <FontAwesomeIcon icon={faArrowAltCircleDown} onClick={(e) => {hkdToGbp()}} className="icon"/>
-                <div>
-                    <label htmlFor="exchangeRateDisplayed">£ 1 = HK$ </label>
-                    <input 
-                        id="exchangeRateDisplayed"
-                        type="number"
-                        min={0}
-                        value={exchangeRateDisplayed}
-                        onChange={(e)=>{setExchangeRateDisplayed(e.target.value); setIsCustom(true);}}
-                    />
-                    {isCustom && <small className="minor">(custom)</small>}
-                </div>
-                
-                <FontAwesomeIcon icon={faArrowAltCircleUp} onClick={(e) => {gbpToHkd()}} className="icon"/>
-            </div>
-            <br />
-
-            {/* Third line */}
-            <div className="text-center">
                 <label htmlFor="gbpPounds">£</label>
                 <input 
                     id="gbpPounds"
@@ -158,11 +126,42 @@ function CurrencyTool(props) {
             </div>
             <br />
 
+            {/* Second line */}
+            <div className="text-center icons">
+            <FontAwesomeIcon icon={faArrowAltCircleDown} onClick={(e) => {gbpToHkd()}} className="icon"/>
+                <div>
+                    <label htmlFor="exchangeRateDisplayed">£ 1 = HK$ </label>
+                    <input 
+                        id="exchangeRateDisplayed"
+                        type="number"
+                        min={0}
+                        value={exchangeRateDisplayed}
+                        onChange={(e)=>{setExchangeRateDisplayed(e.target.value); setIsCustom(true);}}
+                    />
+                    {isCustom && <small className="minor">(custom)</small>}
+                </div>
+                <FontAwesomeIcon icon={faArrowAltCircleUp} onClick={(e) => {hkdToGbp()}} className="icon"/>
+            </div>
+            <br />
+
+            {/* Third line */}
+            <div className="text-center">
+                <label htmlFor="hkdDollars">HK$</label>
+                <input 
+                    id="hkdDollars"
+                    type="number"
+                    min={0}
+                    value={hkdDollars}
+                    onChange={(e)=>{setHkdDollars(e.target.value)}}
+                />
+            </div>
+            <br />
+
             {/* Fourth line */}
             <div className="text-center bottomButtons">
-                <Button variant="primary" className="bottomButton" onClick={(e) => {hkdToGbp()}}>HKD to GBP</Button>
-                <Button variant="danger" className="bottomButton" onClick={(e)=>{resetButton()}}>Reset</Button>
                 <Button variant="primary" className="bottomButton" onClick={(e) => {gbpToHkd()}}>GBP to HKD</Button>
+                <Button variant="danger" className="bottomButton" onClick={(e)=>{resetButton()}}>Reset</Button>
+                <Button variant="primary" className="bottomButton" onClick={(e) => {hkdToGbp()}}>HKD to GBP</Button>
             </div>
             
             
@@ -178,27 +177,28 @@ function CurrencyTool(props) {
         <>
             {/* First line */}
             <div className="text-center">
-                <h4>HK$ {hkdDollars}</h4>
+                <h4>£ {gbpPounds}</h4>
             </div>
             <br />
 
             {/* Second line */}
             <div className="text-center icons">
-                <FontAwesomeIcon icon={faArrowAltCircleDown} onClick={(e)=>{setIsResult(false)}} className={"icon"+(resultType=="hkdToGbp" ? " icon-selected" : "")}/>
+                <FontAwesomeIcon icon={faArrowAltCircleDown} onClick={(e)=>{setIsResult(false)}} className={"icon"+(resultType=="gbpToHkd" ? " icon-selected" : "")}/>
                 <div>
                     <p className="mb-0">£ 1 = HK$ {exchangeRateDisplayed} {isCustom && <small className="custom">(custom)</small>}</p>
                     
                 </div>
                 
-                <FontAwesomeIcon icon={faArrowAltCircleUp} onClick={(e)=>{setIsResult(false)}} className={"icon"+(resultType=="gbpToHkd" ? " icon-selected": "")}/>
+                <FontAwesomeIcon icon={faArrowAltCircleUp} onClick={(e)=>{setIsResult(false)}} className={"icon"+(resultType=="hkdToGbp" ? " icon-selected": "")}/>
             </div>
             <br />
 
             {/* Third line */}
             <div className="text-center">
-                <h4>£ {gbpPounds}</h4>
+                <h4>HK$ {hkdDollars}</h4>
             </div>
             <br />
+
             {/* Fourth line */}
             <div className="text-center bottomButtons">
                 <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{screenshotButton()}}>Screenshot</Button>
