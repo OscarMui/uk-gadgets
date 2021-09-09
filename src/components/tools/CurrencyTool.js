@@ -211,7 +211,7 @@ function CurrencyTool(props) {
     return (
     <Tool>
         <div id="currencyToolScreenshot">
-            <h2>Currency Exchange</h2>
+            <h2>Currency</h2>
             {isResult ? CurrencyToolResult() : CurrencyToolInput() }
             <p className="mt-3 text-center minor"><small>Thank you for using URL. Exchange rate provided by <a href="https://exchangerate.host">exchangerate.host</a></small></p>
         </div>
