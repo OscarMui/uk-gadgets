@@ -29,10 +29,31 @@
     // }
     .bottomButtons, .icons{
         display: flex;
-        justify-content: space-around;
+        justify-content: space-evenly;
+        align-items: center;
     }
     .icon-selected{
         color: #12de48;
+    }
+    .form-check{
+        margin-bottom: 0.35rem;
+        text-align: left;
+    }
+    // .form-check-input{
+    //     font-size: 1.5rem;
+    // }
+    // .form-check-label{
+    //     vertical-align: sub;
+    // }
+    .checkboxes{
+        display: flex;
+        flex-direction: column;
+    }
+    .timeInput{
+        width: 56px;
+    }
+    .timeInput::placeholder{
+        color: #AAA;
     }
     #hkdDollars{
         width: 150px;
@@ -43,7 +64,7 @@
     #exchangeRateDisplayed{
         width: 75px;
     }
-    // #hkdCents{
-    //     width: 50px;
-    // }
+    #ukYear, #hkYear{
+        width: 72px;
+    }
 }

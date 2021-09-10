@@ -11,7 +11,7 @@ import Tool from './Tool';
 function CurrencyTool(props) {
     const [isResult,setIsResult] = useState(false);
     const [resultType,setResultType] = useState("");
-    const [isResultError,setIsResultError] = useState(false);
+    // const [isResultError,setIsResultError] = useState(false);
     const [isFetchError,setIsFetchError] = useState(false);
     const [useEffectKey,setUseEffectKey] = useState(0);
     const [isCustom,setIsCustom] = useState(false);
@@ -21,12 +21,6 @@ function CurrencyTool(props) {
     const [exchangeRateFetched,setExchangeRateFetched] = useState("");
     const [exchangeRateDisplayed,setExchangeRateDisplayed] = useState("");
     const [gbpPounds,setGbpPounds] = useState("");
-    // const validateHkdCents = (cents) =>{
-    //     console.log("validateHkdCents("+cents);
-    //     if(cents==""||(cents.length==1&&cents[0]>='0'&&cents[0]<='9')){
-    //         setHkdCents(cents);
-    //     }
-    // }
 
     useEffect(()=>{
         fetch("https://api.exchangerate.host/latest").then((res)=>{
@@ -143,6 +137,7 @@ function CurrencyTool(props) {
                 <input 
                     id="gbpPounds"
                     type="number"
+                    min={0}
                     value={gbpPounds}
                     onChange={(e)=>{setGbpPounds(e.target.value)}}
                 />
@@ -157,6 +152,7 @@ function CurrencyTool(props) {
                     <input 
                         id="exchangeRateDisplayed"
                         type="number"
+                        min={0}
                         value={exchangeRateDisplayed}
                         onChange={(e)=>{setExchangeRateDisplayed(e.target.value); setIsCustom(true);}}
                     />
@@ -172,6 +168,7 @@ function CurrencyTool(props) {
                 <input 
                     id="hkdDollars"
                     type="number"
+                    min={0}
                     value={hkdDollars}
                     onChange={(e)=>{setHkdDollars(e.target.value)}}
                 />
