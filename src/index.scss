@@ -15,6 +15,9 @@ body {
     text-decoration: none;
   }
   .minor{
-    color: #AAA;
-}
+    opacity: 0.5;
+    a{
+      opacity: 1; //neglect a tags to keep their original blue colour
+    }
+  }
 }

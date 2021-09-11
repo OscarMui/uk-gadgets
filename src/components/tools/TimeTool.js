@@ -19,11 +19,13 @@ function TimeTool(props) {
     const [is12Hours,setIs12Hours] = useState(false);
     const [isDst,setIsDst] = useState(false);
 
+    const [utcTimeNum,setUtcTimeNum] = useState("")
+
     const [ukYear,setUkYear] = useState("");
     const [ukMonth,setUkMonth] = useState("");
     const [ukDay,setUkDay] = useState("");
-    const [ukHour,setukHour] = useState("");
-    const [ukMinute,setukMinute] = useState("");
+    const [ukHour,setUkHour] = useState("");
+    const [ukMinute,setUkMinute] = useState("");
 
     const [hkYear,setHkYear] = useState("");
     const [hkMonth,setHkMonth] = useState("");
@@ -35,15 +37,27 @@ function TimeTool(props) {
     const [exchangeRateDisplayed,setExchangeRateDisplayed] = useState("");
     const [gbpPounds,setGbpPounds] = useState("");
 
+    //create leading zeros
+    const numberToString = (number, digits) => {
+        var numberRemaining = number;
+        var returnString = "";
+        for(let i=(digits-1);i>=0;i--){
+            returnString+=Math.floor(numberRemaining/Math.pow(10,i));
+            numberRemaining=numberRemaining%Math.pow(10,i);
+        }
+        return returnString;
+    }
+
     useEffect(()=>{
         fetch("https://currentmillis.com/time/minutes-since-unix-epoch.php").then((res)=>{ //returns minutes since 1/1/1970
             return res.text();
         }).then((docs)=>{
             console.log(docs*60*1000);
             let utcTimeNum = docs*60*1000;
+            setUtcTimeNum(utcTimeNum);
 
             let isDst = checkIsDst(utcTimeNum);
-            setIsDst(checkIsDst(utcTimeNum));
+            setIsDst(isDst);
 
             let ukTimeNum = utcTimeNum + (isDst ? 1*3600*1000: 0);
             let hkTimeNum = utcTimeNum + 8*3600*1000;
@@ -53,14 +67,14 @@ function TimeTool(props) {
             setUkYear(ukTime.getUTCFullYear());
             setUkMonth(ukTime.getUTCMonth()+1);
             setUkDay(ukTime.getUTCDate());
-            setukHour(ukTime.getUTCHours());
-            setukMinute(ukTime.getUTCMinutes());
+            setUkHour(numberToString(ukTime.getUTCHours(),2));
+            setUkMinute(numberToString(ukTime.getUTCMinutes(),2));
 
             setHkYear(hkTime.getUTCFullYear());
             setHkMonth(hkTime.getUTCMonth()+1);
             setHkDay(hkTime.getUTCDate());
-            sethkHour(hkTime.getUTCHours());
-            sethkMinute(hkTime.getUTCMinutes());
+            sethkHour(numberToString(hkTime.getUTCHours(),2));
+            sethkMinute(numberToString(hkTime.getUTCMinutes(),2));
 
             setIsFetchError(false);
         }).catch((err)=>{
@@ -74,7 +88,7 @@ function TimeTool(props) {
         let utcMonth = utcTime.getUTCMonth()+1;
         if(utcMonth>=11||utcMonth<=2){
             return false;
-        }else if(utcMonth>=3&&utcMonth<=9){
+        }else if(utcMonth>=4&&utcMonth<=9){
             return true;
         }else if(utcMonth==10){ //clock switches back on last Sunday of October, at 2am 
             let utcDay = utcTime.getUTCDate();
@@ -91,7 +105,7 @@ function TimeTool(props) {
             //worst case 31 is Sat, so 25 is the earliest last Sunday
         }else if(utcMonth==3){ //clock goes forward on last Sunday of March, at 1am 
             let utcDay = utcTime.getUTCDate();
-            let march31 = new Date(utcTime.getUTCFullYear()+"-10-31T00:00:00.000+00:00");
+            let march31 = new Date(utcTime.getUTCFullYear()+"-03-31T00:00:00.000+00:00");
             let determinant = (31-utcDay)-march31.getUTCDay(); //getDay => weekday, 0 Sun, 6 Sat
             if(determinant>0){ //if days until last day > last sunday from last day
                 return false;
@@ -107,12 +121,68 @@ function TimeTool(props) {
         }
 
     }
+
     const uktToHkt = () => {
-        
+        let utcTime = new Date(utcTimeNum);
+        let inputTime;
+        if(isFullDate){
+            //"2021-10-31T00:00:00.000+00:00"
+            inputTime = new Date(
+                ukYear+"-"+numberToString(ukMonth,2)+"-"+numberToString(ukDay,2)+"T"+
+                numberToString(ukHour,2)+":"+numberToString(ukMinute,2)+":00.000+00:00"
+            );
+            
+        }else{
+            inputTime = new Date(
+                utcTime.getUTCFullYear()+"-"+numberToString(utcTime.getUTCMonth(),2)+"-"+numberToString(utcTime.getUTCDate(),2)+"T"+
+                numberToString(ukHour,2)+":"+numberToString(ukMinute,2)+":00.000+00:00"
+            );
+        }
+        let inputTimeNum = inputTime.getTime();
+            let isDst = checkIsDst(inputTimeNum);
+            setIsDst(isDst);
+
+            if(isDst) inputTimeNum-=3600*1000; //+1 to +0
+            inputTimeNum += 8*3600*1000; //+0 to +8
+
+            let hkTime = new Date(inputTimeNum);
+            setHkYear(hkTime.getUTCFullYear());
+            setHkMonth(hkTime.getUTCMonth()+1);
+            setHkDay(hkTime.getUTCDate());
+            sethkHour(numberToString(hkTime.getUTCHours(),2));
+            sethkMinute(numberToString(hkTime.getUTCMinutes(),2));
     }
 
     const hktToUkt = () => {
+        let utcTime = new Date(utcTimeNum);
+        let inputTime;
+        if(isFullDate){
+            //"2021-10-31T00:00:00.000+00:00"
+            inputTime = new Date(
+                hkYear+"-"+numberToString(hkMonth,2)+"-"+numberToString(hkDay,2)+"T"+
+                numberToString(hkHour,2)+":"+numberToString(hkMinute,2)+":00.000+00:00"
+            );
+            
+        }else{
+            inputTime = new Date(
+                utcTime.getUTCFullYear()+"-"+numberToString(utcTime.getUTCMonth(),2)+"-"+numberToString(utcTime.getUTCDate(),2)+"T"+
+                numberToString(hkHour,2)+":"+numberToString(hkMinute,2)+":00.000+00:00"
+            );
+        }
+        let inputTimeNum = inputTime.getTime();
+            inputTimeNum -= 8*3600*1000; //+8 to +0
 
+            let isDst = checkIsDst(inputTimeNum);
+            setIsDst(isDst);
+
+            if(isDst) inputTimeNum+=3600*1000; //+1 to +0
+            
+            let ukTime = new Date(inputTimeNum);
+            setUkYear(ukTime.getUTCFullYear());
+            setUkMonth(ukTime.getUTCMonth()+1);
+            setUkDay(ukTime.getUTCDate());
+            setUkHour(numberToString(ukTime.getUTCHours(),2));
+            setUkMinute(numberToString(ukTime.getUTCMinutes(),2));
     }
 
     const resetButton = () => {
@@ -158,8 +228,11 @@ function TimeTool(props) {
         <form>
             {/* First line */}
             <div className="text-center">
+                <div className="d-inline-block mb-2">
+                    <label>🇬🇧 UK: </label>
+                </div>
                 {isFullDate &&
-                <>
+                <div className="d-inline-block mb-2 fullDate">
                     <input 
                         id="ukYear"
                         className="timeInput"
@@ -191,28 +264,29 @@ function TimeTool(props) {
                         value={ukDay}
                         onChange={(e)=>{setUkDay(e.target.value)}}
                     />
-                    <label htmlFor="ukHour">&nbsp;&nbsp;&nbsp;</label>
-                </>
+                </div>
                 }
-                <input 
-                    id="ukHour"
-                    className="timeInput"
-                    type="number"
-                    min={0}
-                    max={23}
-                    value={ukHour}
-                    onChange={(e)=>{setukHour(e.target.value)}}
-                />
-                <label htmlFor="ukMinute">:</label>
-                <input 
-                    id="ukMinute"
-                    className="timeInput"
-                    type="number"
-                    min={0}
-                    max={59}
-                    value={ukMinute}
-                    onChange={(e)=>{setukMinute(e.target.value)}}
-                />
+                <div className="d-inline-block mb-2">
+                    <input 
+                        id="ukHour"
+                        className="timeInput"
+                        type="number"
+                        min={0}
+                        max={23}
+                        value={ukHour}
+                        onChange={(e)=>{setUkHour(e.target.value)}}
+                    />
+                    <label htmlFor="ukMinute">:</label>
+                    <input
+                        id="ukMinute"
+                        className="timeInput"
+                        type="number"
+                        min={0}
+                        max={59}
+                        value={ukMinute}
+                        onChange={(e)=>{setUkMinute(e.target.value)}}
+                    />
+                </div>
             </div>
             <div className="text-center">
                 <small className="minor">{isFullDate && "YYYY/MM/DD"} {is12Hours ?  "hh" : "HH"}:mm {is12Hours && "(a.m./p.m.)"}</small>
@@ -235,6 +309,7 @@ function TimeTool(props) {
                         type="checkbox"
                         label="12-hour System"
                         checked={is12Hours}
+                        disabled={true} //todo
                         onChange={(e)=>{setIs12Hours(e.target.checked)}}
                     />
                     <Form.Check
@@ -252,8 +327,11 @@ function TimeTool(props) {
 
             {/* Third line */}
             <div className="text-center">
-            {isFullDate &&
-                <>
+                <div className="d-inline-block mb-2">
+                    <label>🇭🇰 HK: </label>
+                </div>
+                {isFullDate &&
+                <div className="d-inline-block mb-2 fullDate">
                     <input 
                         id="hkYear"
                         className="timeInput"
@@ -286,27 +364,29 @@ function TimeTool(props) {
                         onChange={(e)=>{setHkDay(e.target.value)}}
                     />
                     <label htmlFor="hkHour">&nbsp;&nbsp;&nbsp;</label>
-                </>
+                </div>
                 }
-                <input 
-                    id="hkHour"
-                    className="timeInput"
-                    type="number"
-                    min={0}
-                    max={23}
-                    value={hkHour}
-                    onChange={(e)=>{sethkHour(e.target.value)}}
-                />
-                <label htmlFor="hkMinute">:</label>
-                <input 
-                    id="hkMinute"
-                    className="timeInput"
-                    type="number"
-                    min={0}
-                    max={59}
-                    value={hkMinute}
-                    onChange={(e)=>{sethkMinute(e.target.value)}}
-                />
+                <div className="d-inline-block mb-2">
+                    <input
+                        id="hkHour"
+                        className="timeInput"
+                        type="number"
+                        min={0}
+                        max={23}
+                        value={hkHour}
+                        onChange={(e)=>{sethkHour(e.target.value)}}
+                    />
+                    <label htmlFor="hkMinute">:</label>
+                    <input
+                        id="hkMinute"
+                        className="timeInput"
+                        type="number"
+                        min={0}
+                        max={59}
+                        value={hkMinute}
+                        onChange={(e)=>{sethkMinute(e.target.value)}}
+                    />
+                </div>
             </div>
             <div className="text-center">
                 <small className="minor">{isFullDate && "YYYY/MM/DD"} {is12Hours ?  "hh" : "HH"}:mm {is12Hours && "(a.m./p.m.)"}</small>
@@ -315,9 +395,9 @@ function TimeTool(props) {
 
             {/* Fourth line */}
             <div className="text-center bottomButtons">
-                <Button variant="primary" className="bottomButton" onClick={(e) => {uktToHkt()}}>GBP to HKD</Button>
+                <Button variant="primary" className="bottomButton" onClick={(e) => {uktToHkt()}}>UK to HK</Button>
                 <Button variant="danger" className="bottomButton" onClick={(e)=>{resetButton()}}>Reset</Button>
-                <Button variant="primary" className="bottomButton" onClick={(e) => {hktToUkt()}}>HKD to GBP</Button>
+                <Button variant="primary" className="bottomButton" onClick={(e) => {hktToUkt()}}>HK to UK</Button>
             </div>
         </form>
     )}
@@ -364,9 +444,9 @@ function TimeTool(props) {
     return (
     <Tool>
         <div id="timeToolScreenshot">
-            <h2>Time (not finished)</h2>
+            <h2>Time</h2>
             {isResult ? TimeToolResult() : TimeToolInput() }
-            <p className="mt-3 text-center minor"><small>Thank you for using URL. Exchange rate provided by <a href="http://worldclockapi.com/">World Clock API</a></small></p>
+            <p className="mt-3 text-center"><small className="minor">Thank you for using UK Gadgets. Current time provided by <a href="https://currentmillis.com/">currentmills</a></small></p>
         </div>
     </Tool>
     );
