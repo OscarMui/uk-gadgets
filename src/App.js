@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import toast, { Toaster } from 'react-hot-toast';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -8,6 +9,7 @@ import TimeTool from './components/tools/TimeTool';
 import './App.scss';
 
 function App() {
+  const {t,i18n} = useTranslation();
   return (
     <Container>
       <Toaster 
@@ -21,8 +23,8 @@ function App() {
           },
       }}/>
       <div className="intro">
-        <h1>UK Gadgets</h1>
-        <p>Some small tools for Hongkongers that might be useful when studying/working in the UK.</p>
+        <h1>{t("ukGadgets")}</h1>
+        <p>{t("introDesc")}</p>
       </div>
       <Row className="tools">
         <TimeTool />

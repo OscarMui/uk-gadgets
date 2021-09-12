@@ -12,6 +12,10 @@
     "@testing-library/user-event": "^12.1.10",
     "bootstrap": "5.1.0",
     "html-to-image": "^1.7.0",
+    "i18n-csv2json-cli": "^1.0.2",
+    "i18next": "^20.6.1",
+    "i18next-browser-languagedetector": "^6.1.2",
+    "i18next-http-backend": "^1.3.1",
     "moment": "^2.29.1",
     "moment-with-locales-es6": "^1.0.1",
     "node-sass": "5.0.0",
@@ -19,6 +23,7 @@
     "react-bootstrap": "^2.0.0-beta.6",
     "react-dom": "^17.0.2",
     "react-hot-toast": "^2.1.1",
+    "react-i18next": "^11.12.0",
     "react-scripts": "4.0.3",
     "sass-loader": "^12.1.0",
     "web-vitals": "^1.0.1"
@@ -27,7 +32,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "i18n": "i18n-csv2json-cli --from dev/i18n.csv --to src/locales --format"
   },
   "eslintConfig": {
     "extends": [
