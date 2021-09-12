@@ -1,3 +1,4 @@
+//TODO: DATA VALIDATION!!!, automatically increase day, automatically determine DST
 import React, {useEffect, useState} from "react";
 import { /*toPng,*/ toJpeg/*, toBlob, toPixelData, toSvg*/ } from 'html-to-image';
 import toast, { Toaster } from 'react-hot-toast';
@@ -9,13 +10,15 @@ import Tool from './Tool';
 
 
 function TimeTool(props) {
+    const [screenWidth,setScreenWidth] = useState(window.innerWidth);
+
     const [isResult,setIsResult] = useState(false);
     const [resultType,setResultType] = useState("");
     // const [isResultError,setIsResultError] = useState(false);
     const [isFetchError,setIsFetchError] = useState(false);
     const [useEffectKey,setUseEffectKey] = useState(0);
 
-    const [isFullDate,setIsFullDate] = useState(false);
+    const [isFullDate,setIsFullDate] = useState(true);
     const [is12Hours,setIs12Hours] = useState(false);
     const [isDst,setIsDst] = useState(false);
 
@@ -48,7 +51,13 @@ function TimeTool(props) {
         return returnString;
     }
 
+    const checkScreenWidth = () =>{
+        setScreenWidth(window.innerWidth);
+    }
+
     useEffect(()=>{
+        window.addEventListener("resize",checkScreenWidth);
+
         fetch("https://currentmillis.com/time/minutes-since-unix-epoch.php").then((res)=>{ //returns minutes since 1/1/1970
             return res.text();
         }).then((docs)=>{
@@ -81,6 +90,10 @@ function TimeTool(props) {
             console.log(err);
             setIsFetchError(true);
         });
+
+        return () => { //cleanup function
+            window.removeEventListener("resize",checkScreenWidth);
+        };
     },[useEffectKey]);
 
     const checkIsDst = (utcTimeNum) =>{
@@ -185,9 +198,26 @@ function TimeTool(props) {
             setUkMinute(numberToString(ukTime.getUTCMinutes(),2));
     }
 
-    const resetButton = () => {
-        // setHkdDollars("");
-        // setGbpPounds("");
+    const nowButton = () => {
+        setUseEffectKey(useEffectKey+1);
+    }
+
+    const clearButton = () => {
+        setUkYear("");
+        setUkMonth("");
+        setUkDay("");
+        setUkHour("");
+        setUkMinute("");
+
+        setHkYear("");
+        setHkMonth("");
+        setHkDay("");
+        sethkHour("");
+        sethkMinute("");
+
+        setIsFullDate(true);
+        setIs12Hours(false);
+        setIsDst(false);
     }
 
     const screenshotButton = () => {
@@ -229,7 +259,7 @@ function TimeTool(props) {
             {/* First line */}
             <div className="text-center">
                 <div className="d-inline-block mb-2">
-                    <label>🇬🇧 UK: </label>
+                    <label><span className="flag">🇬🇧</span> UK </label>
                 </div>
                 {isFullDate &&
                 <div className="d-inline-block mb-2 fullDate">
@@ -328,7 +358,7 @@ function TimeTool(props) {
             {/* Third line */}
             <div className="text-center">
                 <div className="d-inline-block mb-2">
-                    <label>🇭🇰 HK: </label>
+                    <label><span className="flag">🇭🇰</span> HK </label>
                 </div>
                 {isFullDate &&
                 <div className="d-inline-block mb-2 fullDate">
@@ -394,11 +424,25 @@ function TimeTool(props) {
             <br />
 
             {/* Fourth line */}
+            {screenWidth >= 400 ? //PC version
             <div className="text-center bottomButtons">
                 <Button variant="primary" className="bottomButton" onClick={(e) => {uktToHkt()}}>UK to HK</Button>
-                <Button variant="danger" className="bottomButton" onClick={(e)=>{resetButton()}}>Reset</Button>
+                <Button variant="danger" className="bottomButton" onClick={(e)=>{nowButton()}}>Now</Button>
+                <Button variant="danger" className="bottomButton" onClick={(e)=>{clearButton()}}>Clear</Button>
                 <Button variant="primary" className="bottomButton" onClick={(e) => {hktToUkt()}}>HK to UK</Button>
             </div>
+            : //Mobile version
+                <>
+                <div className="text-center bottomButtons mb-2">
+                    <Button variant="danger" className="bottomButton" onClick={(e)=>{nowButton()}}>Now</Button>
+                    <Button variant="danger" className="bottomButton" onClick={(e)=>{clearButton()}}>Clear</Button>
+                </div>
+                <div className="text-center bottomButtons mb-2">
+                    <Button variant="primary" className="bottomButton" onClick={(e) => {uktToHkt()}}>UK to HK</Button>
+                    <Button variant="primary" className="bottomButton" onClick={(e) => {hktToUkt()}}>HK to UK</Button>
+                </div>
+                </>
+            }
         </form>
     )}
 

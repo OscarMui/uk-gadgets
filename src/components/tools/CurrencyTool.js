@@ -133,7 +133,7 @@ function CurrencyTool(props) {
         <form>
             {/* First line */}
             <div className="text-center">
-                <label htmlFor="gbpPounds">£</label>
+                <label htmlFor="gbpPounds"><span className="flag">🇬🇧</span> £</label>
                 <input 
                     id="gbpPounds"
                     type="number"
@@ -164,7 +164,7 @@ function CurrencyTool(props) {
 
             {/* Third line */}
             <div className="text-center">
-                <label htmlFor="hkdDollars">HK$</label>
+                <label htmlFor="hkdDollars"><span className="flag">🇭🇰</span> HK$</label>
                 <input 
                     id="hkdDollars"
                     type="number"
@@ -195,7 +195,7 @@ function CurrencyTool(props) {
         <>
             {/* First line */}
             <div className="text-center">
-                <h4>£ {gbpPounds}</h4>
+                <h4>🇬🇧 £ {gbpPounds}</h4>
             </div>
             <br />
 
@@ -213,7 +213,7 @@ function CurrencyTool(props) {
 
             {/* Third line */}
             <div className="text-center">
-                <h4>HK$ {hkdDollars}</h4>
+                <h4>🇭🇰 HK$ {hkdDollars}</h4>
             </div>
             <br />
 
