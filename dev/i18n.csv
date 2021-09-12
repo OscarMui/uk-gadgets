@@ -1,3 +1,32 @@
 keys,zh_hk,en
+currentLanguage,中,EN
 ukGadgets,英國小工具,UK Gadgets
 introDesc,便利於英國留學或工作的香港人,Some small tools for Hongkongers that might be useful when studying or working in the UK.
+time,時間,Time
+uk,英國,UK
+hk,香港,HK
+YYYY,年,YYYY
+MM,月,MM
+DD,日,DD
+HH,時,HH
+hh,時,hh
+mm,分,mm
+am,上午,a.m.
+pm,下午,p.m.
+includeDate,包含日期,Include Date
+twelveHourSystem,12小時制,12-hour System
+dst,夏令時間,DST
+uktToHkt,香港轉英國,UK to HK
+hktToUkt,英國轉香港,HK to UK
+now,現時,Now
+clear,清除,Clear
+thankYou1,感謝使用,Thank you for using 
+thankYou2,。,. 
+currentTime,現在時間,Current time 
+exchangeRate,即時匯率,Exchange rate 
+thankYou3,由, is provided by 
+thankYou4,提供。,.
+currency,貨幣,Currency
+gbpToHkd,英鎊兑港元,GBP to HKD
+hkdToGbp,港元兑英鎊,HKD to GBP
+reset,重設,Reset

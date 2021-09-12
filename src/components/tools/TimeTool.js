@@ -1,5 +1,6 @@
 //TODO: DATA VALIDATION!!!, automatically increase day, automatically determine DST
 import React, {useEffect, useState} from "react";
+import { useTranslation } from "react-i18next";
 import { /*toPng,*/ toJpeg/*, toBlob, toPixelData, toSvg*/ } from 'html-to-image';
 import toast, { Toaster } from 'react-hot-toast';
 import Form from 'react-bootstrap/Form';
@@ -8,8 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowAltCircleDown, faArrowAltCircleUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import Tool from './Tool';
 
-
 function TimeTool(props) {
+    const {t, i18n} = useTranslation();
     const [screenWidth,setScreenWidth] = useState(window.innerWidth);
 
     const [isResult,setIsResult] = useState(false);
@@ -259,7 +260,7 @@ function TimeTool(props) {
             {/* First line */}
             <div className="text-center">
                 <div className="d-inline-block mb-2">
-                    <label><span className="flag">🇬🇧</span> UK </label>
+                    <label><span className="flag">🇬🇧</span> {t("uk")} </label>
                 </div>
                 {isFullDate &&
                 <div className="d-inline-block mb-2 fullDate">
@@ -267,7 +268,7 @@ function TimeTool(props) {
                         id="ukYear"
                         className="timeInput"
                         type="number"
-                        placeholder="YYYY"
+                        placeholder={t("YYYY")}
                         min={1970}
                         value={ukYear}
                         onChange={(e)=>{setUkYear(e.target.value)}}
@@ -277,7 +278,7 @@ function TimeTool(props) {
                         id="ukMonth"
                         className="timeInput"
                         type="number"
-                        placeholder="MM"
+                        placeholder={t("MM")}
                         min={1}
                         max={12}
                         value={ukMonth}
@@ -288,7 +289,7 @@ function TimeTool(props) {
                         id="ukDay"
                         className="timeInput"
                         type="number"
-                        placeholder="DD"
+                        placeholder={t("DD")}
                         min={1}
                         max={31}
                         value={ukDay}
@@ -301,6 +302,7 @@ function TimeTool(props) {
                         id="ukHour"
                         className="timeInput"
                         type="number"
+                        placeholder={is12Hours ?  t("hh") : t("HH")}
                         min={0}
                         max={23}
                         value={ukHour}
@@ -311,6 +313,7 @@ function TimeTool(props) {
                         id="ukMinute"
                         className="timeInput"
                         type="number"
+                        placeholder={t("mm")}
                         min={0}
                         max={59}
                         value={ukMinute}
@@ -319,7 +322,7 @@ function TimeTool(props) {
                 </div>
             </div>
             <div className="text-center">
-                <small className="minor">{isFullDate && "YYYY/MM/DD"} {is12Hours ?  "hh" : "HH"}:mm {is12Hours && "(a.m./p.m.)"}</small>
+                <small className="minor">{isFullDate && t("YYYY")+"/"+t("MM")+"/"+t("DD")} {is12Hours ?  t("hh") : t("HH")}:{t("mm")} {is12Hours && "("+t("am")+"/"+t("pm")+")"}</small>
             </div>
             <br />
 
@@ -330,14 +333,14 @@ function TimeTool(props) {
                     <Form.Check
                         id="isFullDate"
                         type="checkbox"
-                        label="Include Date"
+                        label={t("includeDate")}
                         checked={isFullDate}
                         onChange={(e)=>{setIsFullDate(e.target.checked)}}
                     />
                     <Form.Check
                         id="is12Hours"
                         type="checkbox"
-                        label="12-hour System"
+                        label={t("twelveHourSystem")}
                         checked={is12Hours}
                         disabled={true} //todo
                         onChange={(e)=>{setIs12Hours(e.target.checked)}}
@@ -345,7 +348,7 @@ function TimeTool(props) {
                     <Form.Check
                         id="isDst"
                         type="checkbox"
-                        label="DST"
+                        label={t("dst")}
                         checked={isDst}
                         disabled={isFullDate} //disable if date is entered by user, i.e. automatically decide
                         onChange={(e)=>{setIsDst(e.target.checked)}}
@@ -358,7 +361,7 @@ function TimeTool(props) {
             {/* Third line */}
             <div className="text-center">
                 <div className="d-inline-block mb-2">
-                    <label><span className="flag">🇭🇰</span> HK </label>
+                    <label><span className="flag">🇭🇰</span> {t("hk")} </label>
                 </div>
                 {isFullDate &&
                 <div className="d-inline-block mb-2 fullDate">
@@ -366,7 +369,7 @@ function TimeTool(props) {
                         id="hkYear"
                         className="timeInput"
                         type="number"
-                        placeholder="YYYY"
+                        placeholder={t("YYYY")}
                         min={1970}
                         value={hkYear}
                         onChange={(e)=>{setHkYear(e.target.value)}}
@@ -376,7 +379,7 @@ function TimeTool(props) {
                         id="hkMonth"
                         className="timeInput"
                         type="number"
-                        placeholder="MM"
+                        placeholder={t("MM")}
                         min={1}
                         max={12}
                         value={hkMonth}
@@ -387,7 +390,7 @@ function TimeTool(props) {
                         id="hkDay"
                         className="timeInput"
                         type="number"
-                        placeholder="DD"
+                        placeholder={t("DD")}
                         min={1}
                         max={31}
                         value={hkDay}
@@ -401,6 +404,7 @@ function TimeTool(props) {
                         id="hkHour"
                         className="timeInput"
                         type="number"
+                        placeholder={is12Hours ?  t("hh") : t("HH")}
                         min={0}
                         max={23}
                         value={hkHour}
@@ -411,6 +415,7 @@ function TimeTool(props) {
                         id="hkMinute"
                         className="timeInput"
                         type="number"
+                        placeholder={t("mm")}
                         min={0}
                         max={59}
                         value={hkMinute}
@@ -419,27 +424,27 @@ function TimeTool(props) {
                 </div>
             </div>
             <div className="text-center">
-                <small className="minor">{isFullDate && "YYYY/MM/DD"} {is12Hours ?  "hh" : "HH"}:mm {is12Hours && "(a.m./p.m.)"}</small>
+            <small className="minor">{isFullDate && t("YYYY")+"/"+t("MM")+"/"+t("DD")} {is12Hours ?  t("hh") : t("HH")}:{t("mm")} {is12Hours && "("+t("am")+"/"+t("pm")+")"}</small>
             </div>
             <br />
 
             {/* Fourth line */}
             {screenWidth >= 400 ? //PC version
             <div className="text-center bottomButtons">
-                <Button variant="primary" className="bottomButton" onClick={(e) => {uktToHkt()}}>UK to HK</Button>
-                <Button variant="danger" className="bottomButton" onClick={(e)=>{nowButton()}}>Now</Button>
-                <Button variant="danger" className="bottomButton" onClick={(e)=>{clearButton()}}>Clear</Button>
-                <Button variant="primary" className="bottomButton" onClick={(e) => {hktToUkt()}}>HK to UK</Button>
+                <Button variant="primary" className="bottomButton" onClick={(e) => {uktToHkt()}}>{t("uktToHkt")}</Button>
+                <Button variant="danger" className="bottomButton" onClick={(e)=>{nowButton()}}>{t("now")}</Button>
+                <Button variant="danger" className="bottomButton" onClick={(e)=>{clearButton()}}>{t("clear")}</Button>
+                <Button variant="primary" className="bottomButton" onClick={(e) => {hktToUkt()}}>{t("hktToUkt")}</Button>
             </div>
             : //Mobile version
                 <>
                 <div className="text-center bottomButtons mb-2">
-                    <Button variant="danger" className="bottomButton" onClick={(e)=>{nowButton()}}>Now</Button>
-                    <Button variant="danger" className="bottomButton" onClick={(e)=>{clearButton()}}>Clear</Button>
+                    <Button variant="danger" className="bottomButton" onClick={(e)=>{nowButton()}}>{t("now")}</Button>
+                    <Button variant="danger" className="bottomButton" onClick={(e)=>{clearButton()}}>{t("clear")}</Button>
                 </div>
                 <div className="text-center bottomButtons mb-2">
-                    <Button variant="primary" className="bottomButton" onClick={(e) => {uktToHkt()}}>UK to HK</Button>
-                    <Button variant="primary" className="bottomButton" onClick={(e) => {hktToUkt()}}>HK to UK</Button>
+                    <Button variant="primary" className="bottomButton" onClick={(e) => {uktToHkt()}}>{t("uktToHkt")}</Button>
+                    <Button variant="primary" className="bottomButton" onClick={(e) => {hktToUkt()}}>{t("hktToUkt")}</Button>
                 </div>
                 </>
             }
@@ -488,9 +493,9 @@ function TimeTool(props) {
     return (
     <Tool>
         <div id="timeToolScreenshot">
-            <h2>Time</h2>
+            <h2>{t("time")}</h2>
             {isResult ? TimeToolResult() : TimeToolInput() }
-            <p className="mt-3 text-center"><small className="minor">Thank you for using UK Gadgets. Current time provided by <a href="https://currentmillis.com/">currentmills</a></small></p>
+            <p className="mt-3 text-center"><small className="minor">{t("thankYou1")}<a href="https://ukgadgets.netlify.app">{t("ukGadgets")}</a>{t("thankYou2")+t("currentTime")+t("thankYou3")}<a href="https://currentmillis.com/">currentmills</a>{t("thankYou4")}</small></p>
         </div>
     </Tool>
     );

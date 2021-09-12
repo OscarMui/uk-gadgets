@@ -1,5 +1,5 @@
 //GOOGLE FONT
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&family=Noto+Serif+TC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
 
 //BOOSTRAP V5
 @import "~bootstrap/scss/bootstrap";
@@ -13,6 +13,17 @@ body {
   color: #FFF;
   a{
     text-decoration: none;
+  }
+  .btn-link{
+    text-decoration: none;
+    color: #FFF;
+  }
+  .btn-link:hover{
+    text-decoration: none;
+    color: #FFF;
+  }
+  .btn-link:focus{
+    box-shadow: none;
   }
   .minor{
     opacity: 0.5;

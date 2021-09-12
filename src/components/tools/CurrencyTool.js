@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import { useTranslation } from "react-i18next";
 import { /*toPng,*/ toJpeg/*, toBlob, toPixelData, toSvg*/ } from 'html-to-image';
 import toast, { Toaster } from 'react-hot-toast';
 import Form from 'react-bootstrap/Form';
@@ -9,6 +10,8 @@ import Tool from './Tool';
 
 
 function CurrencyTool(props) {
+    const {t,i18n} = useTranslation();
+
     const [isResult,setIsResult] = useState(false);
     const [resultType,setResultType] = useState("");
     // const [isResultError,setIsResultError] = useState(false);
@@ -177,13 +180,10 @@ function CurrencyTool(props) {
 
             {/* Fourth line */}
             <div className="text-center bottomButtons">
-                <Button variant="primary" className="bottomButton" onClick={(e) => {gbpToHkd()}}>GBP to HKD</Button>
-                <Button variant="danger" className="bottomButton" onClick={(e)=>{resetButton()}}>Reset</Button>
-                <Button variant="primary" className="bottomButton" onClick={(e) => {hkdToGbp()}}>HKD to GBP</Button>
+                <Button variant="primary" className="bottomButton" onClick={(e) => {gbpToHkd()}}>{t("gbpToHkd")}</Button>
+                <Button variant="danger" className="bottomButton" onClick={(e)=>{resetButton()}}>{t("reset")}</Button>
+                <Button variant="primary" className="bottomButton" onClick={(e) => {hkdToGbp()}}>{t("hkdToGbp")}</Button>
             </div>
-            
-            
-
         </form>
     )}
 
@@ -229,9 +229,9 @@ function CurrencyTool(props) {
     return (
     <Tool>
         <div id="currencyToolScreenshot">
-            <h2>Currency</h2>
+            <h2>{t("currency")}</h2>
             {isResult ? CurrencyToolResult() : CurrencyToolInput() }
-            <p className="mt-3 text-center"><small className="minor">Thank you for using UK Gadgets. Exchange rate provided by <a href="https://exchangerate.host">exchangerate.host</a></small></p>
+            <p className="mt-3 text-center"><small className="minor">{t("thankYou1")}<a href="https://ukgadgets.netlify.app">{t("ukGadgets")}</a>{t("thankYou2")+t("currentTime")+t("thankYou3")}<a href="https://exchangerate.host">exchangerate.host</a>{t("thankYou4")}</small></p>
         </div>
     </Tool>
     );
