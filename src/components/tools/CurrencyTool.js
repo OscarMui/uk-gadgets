@@ -25,6 +25,8 @@ function CurrencyTool(props) {
     const [exchangeRateDisplayed,setExchangeRateDisplayed] = useState("");
     const [gbpPounds,setGbpPounds] = useState("");
 
+    const [takingScreenshot,setTakingScreenshot] = useState(false);
+
     useEffect(()=>{
         fetch("https://api.exchangerate.host/latest").then((res)=>{
             return res.json();
@@ -99,21 +101,33 @@ function CurrencyTool(props) {
     }
 
     const screenshotButton = () => {
-        toJpeg(document.getElementById('currencyToolScreenshot'), { quality: 0.95 })
-        .then(function (dataUrl) {
-            var link = document.createElement('a');
-            link.download = t("currency")+'.jpeg';
-            link.href = dataUrl;
-            link.click();
-            toast.success(t("successScreenshot"), {
-                id: "successScreenshot",
-            });
-        })
-        .catch((err)=>{
-            toast.error(t("errorScreenshot"), {
-                id: "errorScreenshot",
-            });
-        });
+        if(!takingScreenshot){
+            setTakingScreenshot(true);
+            toast.promise(
+                toJpeg(document.getElementById('currencyToolScreenshot'), { quality: 0.95 })
+                .then(function (dataUrl) {
+                    var link = document.createElement('a');
+                    link.download = t("currency")+'.jpeg';
+                    link.href = dataUrl;
+                    link.click();
+                    setTakingScreenshot(false);
+                    // toast.success(t("successScreenshot"), {
+                    //     id: "successScreenshot",
+                    // });
+                })
+                .catch((err)=>{
+                    setTakingScreenshot(false);
+                    // toast.error(t("errorScreenshot"), {
+                    //     id: "errorScreenshot",
+                    // });
+                }),
+                {
+                    loading: t("takingScreenshot"),
+                    success: t("successScreenshot"),
+                    error: t("errorScreenshot"),
+                },
+            )
+        }
     }
 
     const clipboardButton =  () => {
@@ -231,7 +245,13 @@ function CurrencyTool(props) {
         <div id="currencyToolScreenshot">
             <h2>{t("currency")}</h2>
             {isResult ? CurrencyToolResult() : CurrencyToolInput() }
-            <p className="mt-3 text-center"><small className="minor">{t("thankYou1")}<a href="https://ukgadgets.netlify.app">{t("ukGadgets")}</a>{t("thankYou2")+t("currentExchangeRate")+t("thankYou3")}<a href="https://exchangerate.host">exchangerate.host</a>{t("thankYou4")}</small></p>
+            <p className="mt-3 text-center"><small>
+                <span className="minor">{t("thankYou1")}</span>
+                <a href="https://ukgadgets.netlify.app">{t("ukGadgets")}</a>
+                <span className="minor">{t("thankYou2")+t("currentExchangeRate")+t("thankYou3")}</span>
+                <a href="https://exchangerate.host">exchangerate.host</a>
+                <span className="minor">{t("thankYou4")}</span>
+            </small></p>
         </div>
     </Tool>
     );

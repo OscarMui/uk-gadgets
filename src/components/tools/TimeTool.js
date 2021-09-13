@@ -40,9 +40,7 @@ function TimeTool(props) {
     const [hkHour,sethkHour] = useState("");
     const [hkMinute,sethkMinute] = useState("");
 
-    const [exchangeRateFetched,setExchangeRateFetched] = useState("");
-    const [exchangeRateDisplayed,setExchangeRateDisplayed] = useState("");
-    const [gbpPounds,setGbpPounds] = useState("");
+    const [takingScreenshot,setTakingScreenshot] = useState(false);
 
     //create leading zeros
     const numberToString = (number, digits) => {
@@ -222,21 +220,33 @@ function TimeTool(props) {
     }
 
     const screenshotButton = () => {
-        toJpeg(document.getElementById('timeToolScreenshot'), { quality: 0.95 })
-        .then(function (dataUrl) {
-            var link = document.createElement('a');
-            link.download = t("time")+'.jpeg';
-            link.href = dataUrl;
-            link.click();
-            toast.success(t("successScreenshot"), {
-                id: "successScreenshot",
-            });
-        })
-        .catch((err)=>{
-            toast.error(t("errorScreenshot"), {
-                id: "errorScreenshot",
-            });
-        });
+        if(!takingScreenshot){
+            setTakingScreenshot(true);
+            toast.promise(
+                toJpeg(document.getElementById('timeToolScreenshot'), { quality: 0.95 })
+                .then(function (dataUrl) {
+                    var link = document.createElement('a');
+                    link.download = t("time")+'.jpeg';
+                    link.href = dataUrl;
+                    link.click();
+                    setTakingScreenshot(false);
+                    // toast.success(t("successScreenshot"), {
+                    //     id: "successScreenshot",
+                    // });
+                })
+                .catch((err)=>{
+                    setTakingScreenshot(false);
+                    // toast.error(t("errorScreenshot"), {
+                    //     id: "errorScreenshot",
+                    // });
+                }),
+                {
+                    loading: t("takingScreenshot"),
+                    success: t("successScreenshot"),
+                    error: t("errorScreenshot"),
+                },
+            )
+        }
     }
 
     const clipboardButton =  () => {
@@ -515,7 +525,13 @@ function TimeTool(props) {
         <div id="timeToolScreenshot">
             <h2>{t("time")}</h2>
             {isResult ? TimeToolResult() : TimeToolInput() }
-            <p className="mt-3 text-center"><small className="minor">{t("thankYou1")}<a href="https://ukgadgets.netlify.app">{t("ukGadgets")}</a>{t("thankYou2")+t("currentTime")+t("thankYou3")}<a href="https://currentmillis.com/">currentmills</a>{t("thankYou4")}</small></p>
+            <p className="mt-3 text-center"><small>
+                <span className="minor">{t("thankYou1")}</span>
+                <a href="https://ukgadgets.netlify.app">{t("ukGadgets")}</a>
+                <span className="minor">{t("thankYou2")+t("currentTime")+t("thankYou3")}</span>
+                <a href="https://currentmillis.com/">currentmills</a>
+                <span className="minor">{t("thankYou4")}</span>
+            </small></p>
         </div>
     </Tool>
     );

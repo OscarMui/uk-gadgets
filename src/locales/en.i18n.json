@@ -35,6 +35,7 @@
   "hkd": "HKD",
   "isRequired": " is required",
   "isInvalid": " is invalid",
+  "takingScreenshot": "Taking screenshot",
   "successScreenshot": "Successfully took screenshot",
   "errorScreenshot": "Error occured when taking screenshot",
   "successClipboard": "Sucessfully copied to clipboard",

@@ -35,6 +35,7 @@ gbp,英鎊,GBP
 hkd,港元,HKD
 isRequired,為必填項目, is required
 isInvalid,無效, is invalid
+takingScreenshot,正在截圖,Taking screenshot
 successScreenshot,截圖成功,Successfully took screenshot
 errorScreenshot,截圖失敗,Error occured when taking screenshot
 successClipboard,複製成功,Sucessfully copied to clipboard

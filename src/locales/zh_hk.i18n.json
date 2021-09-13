@@ -35,6 +35,7 @@
   "hkd": "港元",
   "isRequired": "為必填項目",
   "isInvalid": "無效",
+  "takingScreenshot": "正在截圖",
   "successScreenshot": "截圖成功",
   "errorScreenshot": "截圖失敗",
   "successClipboard": "複製成功",
