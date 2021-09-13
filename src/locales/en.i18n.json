@@ -44,6 +44,7 @@
   "edit": "Edit",
   "clipboard": "Clipboard",
   "bst": "BST",
-  "gmt": "GMT",
-  "hkt": "HKT"
+  "utc": "UTC",
+  "hkt": "HKT",
+  "autoDst": "Auto determine DST"
 }

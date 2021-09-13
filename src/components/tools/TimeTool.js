@@ -1,4 +1,3 @@
-//TODO: DATA VALIDATION!!!, automatically increase day, automatically determine DST
 import React, {useEffect, useState} from "react";
 import moment from 'moment-with-locales-es6'
 import { useTranslation } from "react-i18next";
@@ -157,8 +156,14 @@ function TimeTool(props) {
         let inputTimeNum = inputTime.getTime();
 
         setUkTimeNum(inputTimeNum);
-        let isDst = checkIsDst(inputTimeNum);
-        setIsDst(isDst);
+        let isDstLocal;
+        if(isFullDate){
+            //auto determine dst
+            isDstLocal = checkIsDst(inputTimeNum);
+            setIsDst(isDstLocal);
+        }else{
+            isDstLocal = isDst;
+        }
         if(isDst) inputTimeNum-=3600*1000; //+1 to +0
         inputTimeNum += 8*3600*1000; //+0 to +8
 
@@ -181,9 +186,15 @@ function TimeTool(props) {
 
         setHkTimeNum(inputTimeNum);
         inputTimeNum -= 8*3600*1000; //+8 to +0
-        let isDst = checkIsDst(inputTimeNum);
-        setIsDst(isDst);
-        if(isDst) inputTimeNum+=3600*1000; //+1 to +0
+        let isDstLocal;
+        if(isFullDate){
+            //auto determine dst
+            isDstLocal = checkIsDst(inputTimeNum);
+            setIsDst(isDstLocal);
+        }else{
+            isDstLocal = isDst;
+        }
+        if(isDstLocal) inputTimeNum+=3600*1000; //+1 to +0
         
         setUkTimeNum(inputTimeNum);
         let ukTime = new Date(inputTimeNum);
@@ -352,14 +363,18 @@ function TimeTool(props) {
                         disabled={true} //todo
                         onChange={(e)=>{setIs12Hours(e.target.checked)}}
                     />
-                    <Form.Check
-                        id="isDst"
-                        type="checkbox"
-                        label={t("dst")}
-                        checked={isDst}
-                        disabled={isFullDate} //disable if date is entered by user, i.e. automatically decide
-                        onChange={(e)=>{setIsDst(e.target.checked)}}
-                    />
+                    {isFullDate ? 
+                        <p className="minor">{t("autoDst")}</p>
+                    :
+                        <Form.Check
+                            id="isDst"
+                            type="checkbox"
+                            label={t("dst")}
+                            checked={isDst}
+                            onChange={(e)=>{setIsDst(e.target.checked)}}
+                        />
+                    }
+                    
                 </div>
                 <FontAwesomeIcon icon={faArrowAltCircleUp} onClick={(e) => {hktToUkt()}} className="icon"/>
             </div>

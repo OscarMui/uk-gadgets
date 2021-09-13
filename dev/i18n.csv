@@ -44,6 +44,7 @@ screenshot,截圖,Screenshot
 edit,更改,Edit
 clipboard,複製,Clipboard
 bst,英國夏令時間,BST
-gmt,英國冬令時間,GMT
+utc,英國冬令時間,UTC
 hkt,香港時間,HKT
+autoDst,自動判斷夏令時間,Auto determine DST
 
