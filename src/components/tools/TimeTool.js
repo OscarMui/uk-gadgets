@@ -429,7 +429,7 @@ function TimeTool(props) {
             <br />
 
             {/* Fourth line */}
-            {screenWidth >= 400 ? //PC version
+            {screenWidth >= 500 ? //PC version
             <div className="text-center bottomButtons">
                 <Button variant="primary" className="bottomButton" onClick={(e) => {uktToHkt()}}>{t("uktToHkt")}</Button>
                 <Button variant="danger" className="bottomButton" onClick={(e)=>{nowButton()}}>{t("now")}</Button>

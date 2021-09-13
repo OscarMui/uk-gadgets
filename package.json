@@ -33,7 +33,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "i18n": "i18n-csv2json-cli --from dev/i18n.csv --to src/locales --format"
+    "i18n": "i18n-csv2json-cli --from dev/i18n.csv --to src/locales --format",
+    "deploy": "react-scripts build && netlify deploy --prod"
   },
   "eslintConfig": {
     "extends": [

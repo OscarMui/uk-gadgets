@@ -43,19 +43,19 @@ function CurrencyTool(props) {
 
     const hkdToGbp = () => {
         if(!exchangeRateDisplayed){
-            toast.error("Exchange rate is empty", {
+            toast.error(t("exchangeRate")+t("isRequired"), {
                 id: "exchangeRateEmpty",
             });
         }else if(isNaN(exchangeRateDisplayed)||exchangeRateDisplayed<0){ //isNaN: return true if not a number
-            toast.error("Exchange rate is invalid", {
+            toast.error(t("exchangeRate")+t("isInvalid"), {
                 id: "exchangeRateInvalid",
             });
         }else if(!hkdDollars){
-            toast.error("HK$ is empty", {
+            toast.error(t("hkd")+t("isRequired"), {
                 id: "hkdDollarsEmpty",
             });
         }else if(isNaN(hkdDollars)||hkdDollars<0){ //isNaN: return true if not a number
-            toast.error("HK$ is invalid", {
+            toast.error(t("hkd")+t("isInvalid"), {
                 id: "hkdDollarsInvalid",
             });
         }else{
@@ -69,19 +69,19 @@ function CurrencyTool(props) {
 
     const gbpToHkd = () => {
         if(!exchangeRateDisplayed){
-            toast.error("Exchange rate is empty", {
+            toast.error(t("exchangeRate")+t("isRequired"), {
                 id: "exchangeRateEmpty",
             });
         }else if(isNaN(exchangeRateDisplayed)||exchangeRateDisplayed<0){ //isNaN: return true if not a number
-            toast.error("Exchange rate is invalid", {
+            toast.error(t("exchangeRate")+t("isInvalid"), {
                 id: "exchangeRateInvalid",
             });
         }else if(!gbpPounds){
-            toast.error("£ is empty", {
+            toast.error(t("gbp")+t("isRequired"), {
                 id: "gbpPoundsEmpty",
             });
         }else if(isNaN(gbpPounds)||gbpPounds<0){ //isNaN: return true if not a number
-            toast.error("£ is invalid", {
+            toast.error(t("gbp")+" "+t("isInvalid"), {
                 id: "gbpPoundsInvalid",
             });
         }else{
@@ -151,7 +151,7 @@ function CurrencyTool(props) {
             <div className="text-center icons">
             <FontAwesomeIcon icon={faArrowAltCircleDown} onClick={(e) => {gbpToHkd()}} className="icon"/>
                 <div>
-                    <label htmlFor="exchangeRateDisplayed">£ 1 = HK$ </label>
+                    <label htmlFor="exchangeRateDisplayed">{t("gbp")}/{t("hkd")} = </label>
                     <input 
                         id="exchangeRateDisplayed"
                         type="number"
@@ -167,7 +167,7 @@ function CurrencyTool(props) {
 
             {/* Third line */}
             <div className="text-center">
-                <label htmlFor="hkdDollars"><span className="flag">🇭🇰</span> HK$</label>
+                <label htmlFor="hkdDollars"><span className="flag">🇭🇰</span> $</label>
                 <input 
                     id="hkdDollars"
                     type="number"
@@ -203,7 +203,7 @@ function CurrencyTool(props) {
             <div className="text-center icons">
                 <FontAwesomeIcon icon={faArrowAltCircleDown} onClick={(e)=>{setIsResult(false)}} className={"icon"+(resultType=="gbpToHkd" ? " icon-selected" : "")}/>
                 <div>
-                    <p className="mb-0">£ 1 = HK$ {exchangeRateDisplayed} {isCustom && <small className="custom">(custom)</small>}</p>
+                    <p className="mb-0">{t("gbp")}/{t("hkd")} = {exchangeRateDisplayed} {isCustom && <small className="custom">(custom)</small>}</p>
                     
                 </div>
                 
@@ -213,7 +213,7 @@ function CurrencyTool(props) {
 
             {/* Third line */}
             <div className="text-center">
-                <h4>🇭🇰 HK$ {hkdDollars}</h4>
+                <h4>🇭🇰 $ {hkdDollars}</h4>
             </div>
             <br />
 
@@ -231,7 +231,7 @@ function CurrencyTool(props) {
         <div id="currencyToolScreenshot">
             <h2>{t("currency")}</h2>
             {isResult ? CurrencyToolResult() : CurrencyToolInput() }
-            <p className="mt-3 text-center"><small className="minor">{t("thankYou1")}<a href="https://ukgadgets.netlify.app">{t("ukGadgets")}</a>{t("thankYou2")+t("currentTime")+t("thankYou3")}<a href="https://exchangerate.host">exchangerate.host</a>{t("thankYou4")}</small></p>
+            <p className="mt-3 text-center"><small className="minor">{t("thankYou1")}<a href="https://ukgadgets.netlify.app">{t("ukGadgets")}</a>{t("thankYou2")+t("currentExchangeRate")+t("thankYou3")}<a href="https://exchangerate.host">exchangerate.host</a>{t("thankYou4")}</small></p>
         </div>
     </Tool>
     );
