@@ -35,3 +35,14 @@ gbp,英鎊,GBP
 hkd,港元,HKD
 isRequired,為必填項目, is required
 isInvalid,無效, is invalid
+successScreenshot,截圖成功,Successfully took screenshot
+errorScreenshot,截圖失敗,Error occured when taking screenshot
+successClipboard,複製成功,Sucessfully copied to clipboard
+custom,自訂,custom
+screenshot,截圖,Screenshot
+edit,更改,Edit
+clipboard,複製,Clipboard
+bst,英國夏令時間,BST
+gmt,英國冬令時間,GMT
+hkt,香港時間,HKT
+

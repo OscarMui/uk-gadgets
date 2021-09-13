@@ -34,5 +34,15 @@
   "gbp": "GBP",
   "hkd": "HKD",
   "isRequired": " is required",
-  "isInvalid": " is invalid"
+  "isInvalid": " is invalid",
+  "successScreenshot": "Successfully took screenshot",
+  "errorScreenshot": "Error occured when taking screenshot",
+  "successClipboard": "Sucessfully copied to clipboard",
+  "custom": "custom",
+  "screenshot": "Screenshot",
+  "edit": "Edit",
+  "clipboard": "Clipboard",
+  "bst": "BST",
+  "gmt": "GMT",
+  "hkt": "HKT"
 }

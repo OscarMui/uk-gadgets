@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import toast, { Toaster } from 'react-hot-toast';
 import Container from 'react-bootstrap/Container';
+import moment from 'moment-with-locales-es6'
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 
@@ -15,9 +16,15 @@ function App() {
   const changeLanguage = () =>{
     if(i18n.language=="en"){
       i18n.changeLanguage("zh_hk");
+      moment.locale("zh-hk")
     }else{
       i18n.changeLanguage("en");
+      moment.locale("en-gb")
     }
+  }
+
+  if(i18n.language=="en"&&moment.locale()!="en-gb"){
+    moment.locale("en-gb")
   }
   return (
     <Container>

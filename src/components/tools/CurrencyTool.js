@@ -102,15 +102,15 @@ function CurrencyTool(props) {
         toJpeg(document.getElementById('currencyToolScreenshot'), { quality: 0.95 })
         .then(function (dataUrl) {
             var link = document.createElement('a');
-            link.download = 'currency.jpeg';
+            link.download = t("currency")+'.jpeg';
             link.href = dataUrl;
             link.click();
-            toast.success("Successfully took screenshot", {
+            toast.success(t("successScreenshot"), {
                 id: "successScreenshot",
             });
         })
         .catch((err)=>{
-            toast.error("Error taking screenshot", {
+            toast.error(t("errorScreenshot"), {
                 id: "errorScreenshot",
             });
         });
@@ -124,10 +124,10 @@ function CurrencyTool(props) {
             text = "£"+gbpPounds+" -> HK$"+hkdDollars;
         }
         text += "\n(£1 = HK$"+exchangeRateDisplayed;
-        if(isCustom) text += "(custom)";
+        if(isCustom) text += "("+t("custom")+")";
         text+=")"
         navigator.clipboard.writeText(text);
-        toast.success("Successfully copied to clipboard", {
+        toast.success(t("successClipboard"), {
             id: "successClipboard",
         });
     }
@@ -151,7 +151,7 @@ function CurrencyTool(props) {
             <div className="text-center icons">
             <FontAwesomeIcon icon={faArrowAltCircleDown} onClick={(e) => {gbpToHkd()}} className="icon"/>
                 <div>
-                    <label htmlFor="exchangeRateDisplayed">{t("gbp")}/{t("hkd")} = </label>
+                    <label htmlFor="exchangeRateDisplayed">£1 = HK$ </label>
                     <input 
                         id="exchangeRateDisplayed"
                         type="number"
@@ -159,7 +159,7 @@ function CurrencyTool(props) {
                         value={exchangeRateDisplayed}
                         onChange={(e)=>{setExchangeRateDisplayed(e.target.value); setIsCustom(true);}}
                     />
-                    {isCustom && <small className="minor">(custom)</small>}
+                    {isCustom && <small className="minor">({t("custom")})</small>}
                 </div>
                 <FontAwesomeIcon icon={faArrowAltCircleUp} onClick={(e) => {hkdToGbp()}} className="icon"/>
             </div>
@@ -203,7 +203,7 @@ function CurrencyTool(props) {
             <div className="text-center icons">
                 <FontAwesomeIcon icon={faArrowAltCircleDown} onClick={(e)=>{setIsResult(false)}} className={"icon"+(resultType=="gbpToHkd" ? " icon-selected" : "")}/>
                 <div>
-                    <p className="mb-0">{t("gbp")}/{t("hkd")} = {exchangeRateDisplayed} {isCustom && <small className="custom">(custom)</small>}</p>
+                    <p className="mb-0">£1 = HK$ {exchangeRateDisplayed} {isCustom && <small className="custom">({t("custom")})</small>}</p>
                     
                 </div>
                 
@@ -219,9 +219,9 @@ function CurrencyTool(props) {
 
             {/* Fourth line */}
             <div className="text-center bottomButtons">
-                <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{screenshotButton()}}>Screenshot</Button>
-                <Button variant="warning" className="bottomButton" onClick={(e)=>{setIsResult(false)}}>Edit</Button>
-                <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{clipboardButton()}}>Clipboard</Button>
+                <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{screenshotButton()}}>{t("screenshot")}</Button>
+                <Button variant="warning" className="bottomButton" onClick={(e)=>{setIsResult(false)}}>{t("edit")}</Button>
+                <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{clipboardButton()}}>{t("clipboard")}</Button>
             </div>
         </>
     )}

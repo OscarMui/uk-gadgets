@@ -34,5 +34,15 @@
   "gbp": "英鎊",
   "hkd": "港元",
   "isRequired": "為必填項目",
-  "isInvalid": "無效"
+  "isInvalid": "無效",
+  "successScreenshot": "截圖成功",
+  "errorScreenshot": "截圖失敗",
+  "successClipboard": "複製成功",
+  "custom": "自訂",
+  "screenshot": "截圖",
+  "edit": "更改",
+  "clipboard": "複製",
+  "bst": "英國夏令時間",
+  "gmt": "英國冬令時間",
+  "hkt": "香港時間"
 }
