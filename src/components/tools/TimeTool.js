@@ -88,6 +88,25 @@ function TimeTool(props) {
         return hour+(am=="pm"?12:0);
     }
 
+    const validateDate = (year,month,day) => {
+        if(year<1000){
+            toast.error(t("errorYear1000"), {
+                id: "errorYear1000",
+            });
+            return false;
+        }
+        let isLeapYear = year%400==0 || (year%4==0 && year%100!=0);
+        let numberOfDays = [31,isLeapYear? 29: 28,31,30,31,30,31,31,30,31,30,31];
+        if(day>numberOfDays[month-1]){
+            toast.error(t("day")+t("isInvalid"),{
+                id: "dayInvalid"
+            });
+            return false;
+        }
+
+        return true;
+    }
+
     const checkScreenWidth = () =>{
         setScreenWidth(window.innerWidth);
     }
@@ -185,7 +204,9 @@ function TimeTool(props) {
     }
 
     const uktToHkt = () => {
-        let utcTime = new Date(utcTimeNum);
+        if(isFullDate){
+            if(!validateDate(ukYear,ukMonth,ukDay)) return;
+        }
         let inputTime = numberToDate(isFullDate,ukYear,ukMonth,ukDay,is12Hours ? convert12To24(ukHour,ukAm) : ukHour,ukMinute);
         let inputTimeNum = inputTime.getTime();
 
@@ -220,7 +241,9 @@ function TimeTool(props) {
     }
 
     const hktToUkt = () => {
-        let utcTime = new Date(utcTimeNum);
+        if(isFullDate){
+            if(!validateDate(hkYear,hkMonth,hkDay)) return;
+        }
         let inputTime = numberToDate(isFullDate,hkYear,hkMonth,hkDay,is12Hours ? convert12To24(hkHour,ukAm) : hkHour,hkMinute);
         let inputTimeNum = inputTime.getTime();
 

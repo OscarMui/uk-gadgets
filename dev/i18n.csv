@@ -49,3 +49,5 @@ hkt,香港時間,HKT
 autoDst,自動判斷夏令時間,Auto determine DST
 am,上午,a.m.
 pm,下午,p.m.
+errorYear1000,年份不可少於1000,Year cannot be smaller than 1000
+day,日子,Day

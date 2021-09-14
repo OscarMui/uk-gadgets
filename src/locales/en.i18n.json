@@ -46,5 +46,7 @@
   "bst": "BST",
   "utc": "UTC",
   "hkt": "HKT",
-  "autoDst": "Auto determine DST"
+  "autoDst": "Auto determine DST",
+  "errorYear1000": "Year cannot be smaller than 1000",
+  "day": "Day"
 }
