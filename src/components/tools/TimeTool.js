@@ -595,16 +595,16 @@ function TimeTool(props) {
                 <Button variant="primary" className="bottomButton" onClick={(e) => {hktToUkt()}}>{t("hktToUkt")} <FontAwesomeIcon icon={faArrowAltCircleUp} /></Button>
             </div>
             : //Mobile version */}
-            <>
-                <div className="text-center bottomButtons mb-2">
-                    <Button variant="danger" className="bottomButton" onClick={(e)=>{nowButton()}}><FontAwesomeIcon icon={faClock} /> {t("now")}</Button>
-                    <Button variant="danger" className="bottomButton" onClick={(e)=>{clearButton()}}>{t("clear")} <FontAwesomeIcon icon={faTrashAlt} /></Button>
-                </div>
-                <div className="text-center bottomButtons mb-2">
-                    <Button variant="primary" className="bottomButton" onClick={(e) => {uktToHkt()}}><FontAwesomeIcon icon={faArrowAltCircleDown} /> {t("uktToHkt")}</Button>
-                    <Button variant="primary" className="bottomButton" onClick={(e) => {hktToUkt()}}>{t("hktToUkt")} <FontAwesomeIcon icon={faArrowAltCircleUp} /></Button>
-                </div>
-            </>
+            {/* <> */}
+            <div className="text-center bottomButtons mb-2">
+                <Button variant="primary" className="bottomButton" onClick={(e) => {uktToHkt()}}><FontAwesomeIcon icon={faArrowAltCircleDown} /> {t("uktToHkt")}</Button>
+                <Button variant="primary" className="bottomButton" onClick={(e) => {hktToUkt()}}>{t("hktToUkt")} <FontAwesomeIcon icon={faArrowAltCircleUp} /></Button>
+            </div>
+            <div className="text-center bottomButtons mb-2">
+                <Button variant="danger" className="bottomButton" onClick={(e)=>{nowButton()}}><FontAwesomeIcon icon={faClock} /> {t("now")}</Button>
+                <Button variant="danger" className="bottomButton" onClick={(e)=>{clearButton()}}>{t("clear")} <FontAwesomeIcon icon={faTrashAlt} /></Button>
+            </div>
+            {/* </> */}
         </form>
     )}
 

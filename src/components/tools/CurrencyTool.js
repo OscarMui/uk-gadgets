@@ -193,10 +193,12 @@ function CurrencyTool(props) {
             <br />
 
             {/* Fourth line */}
-            <div className="text-center bottomButtons">
+            <div className="text-center bottomButtons mb-2">
                 <Button variant="primary" className="bottomButton" onClick={(e) => {gbpToHkd()}}><FontAwesomeIcon icon={faArrowAltCircleDown} /> {t("gbpToHkd")}</Button>
-                <Button variant="danger" className="bottomButton" onClick={(e)=>{resetButton()}}><FontAwesomeIcon icon={faTrashAlt} /> {t("reset")}</Button>
                 <Button variant="primary" className="bottomButton" onClick={(e) => {hkdToGbp()}}>{t("hkdToGbp")} <FontAwesomeIcon icon={faArrowAltCircleUp} /></Button>
+            </div>
+            <div className="text-center bottomButtons mb-2">
+                <Button variant="danger" className="bottomButton" onClick={(e)=>{resetButton()}}><FontAwesomeIcon icon={faTrashAlt} /> {t("reset")}</Button>
             </div>
         </form>
     )}
