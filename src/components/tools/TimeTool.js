@@ -6,7 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowAltCircleDown, faArrowAltCircleUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleDown, faArrowAltCircleUp, faTrashAlt, faPen, faClock, faImage, faCopy } from '@fortawesome/free-solid-svg-icons';
 import Tool from './Tool';
 
 function TimeTool(props) {
@@ -142,7 +142,7 @@ function TimeTool(props) {
     }
 
     useEffect(()=>{
-        window.addEventListener("resize",checkScreenWidth);
+        // window.addEventListener("resize",checkScreenWidth);
 
         fetch("https://currentmillis.com/time/minutes-since-unix-epoch.php").then((res)=>{ //returns minutes since 1/1/1970
             return res.text();
@@ -189,9 +189,9 @@ function TimeTool(props) {
             setIsFetchError(true);
         });
 
-        return () => { //cleanup function
-            window.removeEventListener("resize",checkScreenWidth);
-        };
+        // return () => { //cleanup function
+        //     window.removeEventListener("resize",checkScreenWidth);
+        // };
     },[useEffectKey]);
 
     const checkIsDst = (utcTimeNum) =>{
@@ -587,25 +587,24 @@ function TimeTool(props) {
             <br />
 
             {/* Fourth line */}
-            {screenWidth >= 500 ? //PC version
+            {/* {screenWidth >= 550&&screenWidth<=992 ? //PC version
             <div className="text-center bottomButtons">
-                <Button variant="primary" className="bottomButton" onClick={(e) => {uktToHkt()}}>{t("uktToHkt")}</Button>
-                <Button variant="danger" className="bottomButton" onClick={(e)=>{nowButton()}}>{t("now")}</Button>
-                <Button variant="danger" className="bottomButton" onClick={(e)=>{clearButton()}}>{t("clear")}</Button>
-                <Button variant="primary" className="bottomButton" onClick={(e) => {hktToUkt()}}>{t("hktToUkt")}</Button>
+                <Button variant="primary" className="bottomButton" onClick={(e) => {uktToHkt()}}><FontAwesomeIcon icon={faArrowAltCircleDown} /> {t("uktToHkt")}</Button>
+                <Button variant="danger" className="bottomButton" onClick={(e)=>{nowButton()}}><FontAwesomeIcon icon={faClock} /> {t("now")}</Button>
+                <Button variant="danger" className="bottomButton" onClick={(e)=>{clearButton()}}>{t("clear")} <FontAwesomeIcon icon={faTrashAlt} /></Button>
+                <Button variant="primary" className="bottomButton" onClick={(e) => {hktToUkt()}}>{t("hktToUkt")} <FontAwesomeIcon icon={faArrowAltCircleUp} /></Button>
             </div>
-            : //Mobile version
-                <>
+            : //Mobile version */}
+            <>
                 <div className="text-center bottomButtons mb-2">
-                    <Button variant="danger" className="bottomButton" onClick={(e)=>{nowButton()}}>{t("now")}</Button>
-                    <Button variant="danger" className="bottomButton" onClick={(e)=>{clearButton()}}>{t("clear")}</Button>
+                    <Button variant="danger" className="bottomButton" onClick={(e)=>{nowButton()}}><FontAwesomeIcon icon={faClock} /> {t("now")}</Button>
+                    <Button variant="danger" className="bottomButton" onClick={(e)=>{clearButton()}}>{t("clear")} <FontAwesomeIcon icon={faTrashAlt} /></Button>
                 </div>
                 <div className="text-center bottomButtons mb-2">
-                    <Button variant="primary" className="bottomButton" onClick={(e) => {uktToHkt()}}>{t("uktToHkt")}</Button>
-                    <Button variant="primary" className="bottomButton" onClick={(e) => {hktToUkt()}}>{t("hktToUkt")}</Button>
+                    <Button variant="primary" className="bottomButton" onClick={(e) => {uktToHkt()}}><FontAwesomeIcon icon={faArrowAltCircleDown} /> {t("uktToHkt")}</Button>
+                    <Button variant="primary" className="bottomButton" onClick={(e) => {hktToUkt()}}>{t("hktToUkt")} <FontAwesomeIcon icon={faArrowAltCircleUp} /></Button>
                 </div>
-                </>
-            }
+            </>
         </form>
     )}
 
@@ -664,9 +663,9 @@ function TimeTool(props) {
 
             {/* Fourth line */}
             <div className="text-center bottomButtons">
-                <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{screenshotButton()}}>{t("screenshot")}</Button>
-                <Button variant="warning" className="bottomButton" onClick={(e)=>{setIsResult(false)}}>{t("edit")}</Button>
-                <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{clipboardButton()}}>{t("clipboard")}</Button>
+                <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{screenshotButton()}}><FontAwesomeIcon icon={faImage} /> {t("screenshot")}</Button>
+                <Button variant="warning" className="bottomButton" onClick={(e)=>{setIsResult(false)}}><FontAwesomeIcon icon={faPen} /> {t("edit")}</Button>
+                <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{clipboardButton()}}><FontAwesomeIcon icon={faCopy} /> {t("clipboard")}</Button>
             </div>
         </>
     )}

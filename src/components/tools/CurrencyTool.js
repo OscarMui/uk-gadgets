@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowAltCircleDown, faArrowAltCircleUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleDown, faArrowAltCircleUp, faTrashAlt, faPen, faClock, faImage, faCopy } from '@fortawesome/free-solid-svg-icons';
 import Tool from './Tool';
 
 
@@ -194,9 +194,9 @@ function CurrencyTool(props) {
 
             {/* Fourth line */}
             <div className="text-center bottomButtons">
-                <Button variant="primary" className="bottomButton" onClick={(e) => {gbpToHkd()}}>{t("gbpToHkd")}</Button>
-                <Button variant="danger" className="bottomButton" onClick={(e)=>{resetButton()}}>{t("reset")}</Button>
-                <Button variant="primary" className="bottomButton" onClick={(e) => {hkdToGbp()}}>{t("hkdToGbp")}</Button>
+                <Button variant="primary" className="bottomButton" onClick={(e) => {gbpToHkd()}}><FontAwesomeIcon icon={faArrowAltCircleDown} /> {t("gbpToHkd")}</Button>
+                <Button variant="danger" className="bottomButton" onClick={(e)=>{resetButton()}}><FontAwesomeIcon icon={faTrashAlt} /> {t("reset")}</Button>
+                <Button variant="primary" className="bottomButton" onClick={(e) => {hkdToGbp()}}>{t("hkdToGbp")} <FontAwesomeIcon icon={faArrowAltCircleUp} /></Button>
             </div>
         </form>
     )}
@@ -233,9 +233,9 @@ function CurrencyTool(props) {
 
             {/* Fourth line */}
             <div className="text-center bottomButtons">
-                <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{screenshotButton()}}>{t("screenshot")}</Button>
-                <Button variant="warning" className="bottomButton" onClick={(e)=>{setIsResult(false)}}>{t("edit")}</Button>
-                <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{clipboardButton()}}>{t("clipboard")}</Button>
+                <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{screenshotButton()}}><FontAwesomeIcon icon={faImage} /> {t("screenshot")}</Button>
+                <Button variant="warning" className="bottomButton" onClick={(e)=>{setIsResult(false)}}><FontAwesomeIcon icon={faPen} /> {t("edit")}</Button>
+                <Button variant="success" className="bottomButton saveButton" onClick={(e)=>{clipboardButton()}}><FontAwesomeIcon icon={faCopy} /> {t("clipboard")}</Button>
             </div>
         </>
     )}
