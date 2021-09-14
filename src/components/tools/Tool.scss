@@ -8,7 +8,7 @@
         text-align: center;
         margin-bottom: 1.0rem;
     }
-    input{
+    input, select{
         background-color: #555;
         color: #FFF;
         border: 1px solid #FFF;
@@ -17,7 +17,10 @@
         margin-right: 0.3rem;
         padding: 0.375rem;
     }
-    input:focus{
+    select{
+
+    }
+    input:focus, select:focus, select:focus-visible{
         outline: #AAA auto 1px;
     }
     .icon{
@@ -52,6 +55,9 @@
     }
     .timeInput{
         width: 58px;
+    }
+    .timeSelect{
+        width: 75px;
     }
     .timeInput::placeholder{
         color: #AAA;

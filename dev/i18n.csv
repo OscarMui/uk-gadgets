@@ -16,8 +16,8 @@ pm,下午,p.m.
 includeDate,包含日期,Include Date
 twelveHourSystem,12小時制,12-hour System
 dst,夏令時間,DST
-uktToHkt,香港轉英國時間,UK to HK Time
-hktToUkt,英國轉香港時間,HK to UK Time
+uktToHkt,英國轉香港時間,UK to HK Time
+hktToUkt,香港轉英國時間,HK to UK Time
 now,現時,Now
 clear,清除,Clear
 thankYou1,感謝使用,Thank you for using 
@@ -47,4 +47,5 @@ bst,英國夏令時間,BST
 utc,英國冬令時間,UTC
 hkt,香港時間,HKT
 autoDst,自動判斷夏令時間,Auto determine DST
-
+am,上午,a.m.
+pm,下午,p.m.

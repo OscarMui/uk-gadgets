@@ -32,12 +32,15 @@ function TimeTool(props) {
     const [ukDay,setUkDay] = useState("");
     const [ukHour,setUkHour] = useState("");
     const [ukMinute,setUkMinute] = useState("");
+    const [ukAm,setUkAm] = useState("am");
 
     const [hkYear,setHkYear] = useState("");
     const [hkMonth,setHkMonth] = useState("");
     const [hkDay,setHkDay] = useState("");
-    const [hkHour,sethkHour] = useState("");
-    const [hkMinute,sethkMinute] = useState("");
+    const [hkHour,setHkHour] = useState("");
+    const [hkMinute,setHkMinute] = useState("");
+    const [hkAm,setHkAm] = useState("am");
+
 
     const [takingScreenshot,setTakingScreenshot] = useState(false);
 
@@ -53,7 +56,7 @@ function TimeTool(props) {
     }
 
     const momentToString = (timeNum,isFullDate,is12Hours) => {
-        let momentFormat = (isFullDate ? "ll " : "") + (is12Hours ? "hh:mm a" : "HH:mm");
+        let momentFormat = (isFullDate ? "ll " : "") + (is12Hours ? (i18n.language=="zh_hk" ? "a h:mm" : "h:mm a") : "HH:mm");
         return moment(timeNum+new Date().getTimezoneOffset()*60*1000).format(momentFormat);
     }
 
@@ -64,6 +67,25 @@ function TimeTool(props) {
             (isFullDate ? year : utcTime.getUTCFullYear())+"-"+numberToString((isFullDate ? month : utcTime.getUTCMonth()),2)+"-"+numberToString((isFullDate ? day : utcTime.getUTCDate()),2)+"T"+
             numberToString(hour,2)+":"+numberToString(minute,2)+":00.000+00:00"
         );
+    }
+    
+    const convert24To12 = (hour) => {
+        hour = parseInt(hour,10);
+        if(hour==0){
+            return {hour: 12, am: "am"}
+        }else if(hour<12){
+            return {hour: hour, am: "am"}
+        }else if(hour==12){
+            return {hour: 12, am: "pm"}
+        }else{
+            return {hour: hour-12, am: "pm"}
+        }
+    }
+
+    const convert12To24 = (hour,am) => {
+        hour = parseInt(hour,10);
+        if(hour==12) hour=0;
+        return hour+(am=="pm"?12:0);
     }
 
     const checkScreenWidth = () =>{
@@ -91,14 +113,26 @@ function TimeTool(props) {
             setUkYear(ukTime.getUTCFullYear());
             setUkMonth(ukTime.getUTCMonth()+1);
             setUkDay(ukTime.getUTCDate());
-            setUkHour(numberToString(ukTime.getUTCHours(),2));
+            if(is12Hours){
+                let {hour,am} = convert24To12(ukTime.getUTCHours());
+                setUkHour(hour);
+                setUkAm(am);
+            }else{
+                setUkHour(numberToString(ukTime.getUTCHours(),2));
+            }
             setUkMinute(numberToString(ukTime.getUTCMinutes(),2));
 
             setHkYear(hkTime.getUTCFullYear());
             setHkMonth(hkTime.getUTCMonth()+1);
             setHkDay(hkTime.getUTCDate());
-            sethkHour(numberToString(hkTime.getUTCHours(),2));
-            sethkMinute(numberToString(hkTime.getUTCMinutes(),2));
+            if(is12Hours){
+                let {hour,am} = convert24To12(hkTime.getUTCHours());
+                setHkHour(hour);
+                setHkAm(am);
+            }else{
+                setHkHour(numberToString(hkTime.getUTCHours(),2));
+            }
+            setHkMinute(numberToString(hkTime.getUTCMinutes(),2));
 
             setIsFetchError(false);
         }).catch((err)=>{
@@ -152,7 +186,7 @@ function TimeTool(props) {
 
     const uktToHkt = () => {
         let utcTime = new Date(utcTimeNum);
-        let inputTime = numberToDate(isFullDate,ukYear,ukMonth,ukDay,ukHour,ukMinute);
+        let inputTime = numberToDate(isFullDate,ukYear,ukMonth,ukDay,is12Hours ? convert12To24(ukHour,ukAm) : ukHour,ukMinute);
         let inputTimeNum = inputTime.getTime();
 
         setUkTimeNum(inputTimeNum);
@@ -172,8 +206,14 @@ function TimeTool(props) {
         setHkYear(hkTime.getUTCFullYear());
         setHkMonth(hkTime.getUTCMonth()+1);
         setHkDay(hkTime.getUTCDate());
-        sethkHour(numberToString(hkTime.getUTCHours(),2));
-        sethkMinute(numberToString(hkTime.getUTCMinutes(),2));
+        if(is12Hours){
+            let {hour,am} = convert24To12(hkTime.getUTCHours());
+            setHkHour(hour);
+            setHkAm(am);
+        }else{
+            setHkHour(numberToString(hkTime.getUTCHours(),2));
+        }
+        setHkMinute(numberToString(hkTime.getUTCMinutes(),2));
 
         setIsResult(true);
         setResultType("uktToHkt");
@@ -181,7 +221,7 @@ function TimeTool(props) {
 
     const hktToUkt = () => {
         let utcTime = new Date(utcTimeNum);
-        let inputTime = numberToDate(isFullDate,hkYear,hkMonth,hkDay,hkHour,hkMinute);
+        let inputTime = numberToDate(isFullDate,hkYear,hkMonth,hkDay,is12Hours ? convert12To24(hkHour,ukAm) : hkHour,hkMinute);
         let inputTimeNum = inputTime.getTime();
 
         setHkTimeNum(inputTimeNum);
@@ -201,7 +241,13 @@ function TimeTool(props) {
         setUkYear(ukTime.getUTCFullYear());
         setUkMonth(ukTime.getUTCMonth()+1);
         setUkDay(ukTime.getUTCDate());
-        setUkHour(numberToString(ukTime.getUTCHours(),2));
+        if(is12Hours){
+            let {hour,am} = convert24To12(ukTime.getUTCHours());
+            setUkHour(hour);
+            setUkAm(am);
+        }else{
+            setUkHour(numberToString(ukTime.getUTCHours(),2));
+        }
         setUkMinute(numberToString(ukTime.getUTCMinutes(),2));
 
         setIsResult(true);
@@ -213,21 +259,27 @@ function TimeTool(props) {
     }
 
     const clearButton = () => {
+        clearTime();
+
+        setIsFullDate(true);
+        setIs12Hours(false);
+        setIsDst(false);
+    }
+
+    const clearTime = () => {
         setUkYear("");
         setUkMonth("");
         setUkDay("");
         setUkHour("");
         setUkMinute("");
+        setUkAm("am");
 
         setHkYear("");
         setHkMonth("");
         setHkDay("");
-        sethkHour("");
-        sethkMinute("");
-
-        setIsFullDate(true);
-        setIs12Hours(false);
-        setIsDst(false);
+        setHkHour("");
+        setHkMinute("");
+        setHkAm("am");
     }
 
     const screenshotButton = () => {
@@ -261,12 +313,8 @@ function TimeTool(props) {
     }
 
     const clipboardButton =  () => {
-        let text = "";
-        if(resultType=="hktToUkt"){
-            text = momentToString(ukTimeNum,isFullDate,is12Hours)+" ("+(isDst?t("bst"):t("utc"))+") -> "+momentToString(hkTimeNum,isFullDate,is12Hours)+" ("+t("hkt")+")";
-        }else if(resultType=="uktToHkt"){
-            text = momentToString(hkTimeNum,isFullDate,is12Hours)+" ("+t("hkt")+") -> "+momentToString(ukTimeNum,isFullDate,is12Hours)+" ("+(isDst?t("bst"):t("utc"))+")";
-        }
+        let text = momentToString(ukTimeNum,isFullDate,is12Hours)+" ("+(isDst?t("bst"):t("utc"))+")\n"+momentToString(hkTimeNum,isFullDate,is12Hours)+" ("+t("hkt")+")";
+        
         navigator.clipboard.writeText(text);
         toast.success(t("successClipboard"), {
             id: "successClipboard",
@@ -322,7 +370,7 @@ function TimeTool(props) {
                         type="number"
                         placeholder={is12Hours ?  t("hh") : t("HH")}
                         min={0}
-                        max={23}
+                        max={is12Hours ? 12 : 23}
                         value={ukHour}
                         onChange={(e)=>{setUkHour(e.target.value)}}
                     />
@@ -337,6 +385,17 @@ function TimeTool(props) {
                         value={ukMinute}
                         onChange={(e)=>{setUkMinute(e.target.value)}}
                     />
+                    {is12Hours &&
+                        <Form.Select
+                            id="ukAm"
+                            className="timeSelect d-inline-block"
+                            value={ukAm}
+                            onChange={(e)=>{setUkAm(e.target.value)}}
+                        >
+                            <option value="am">{t("am")}</option>
+                            <option value="pm">{t("pm")}</option>
+                        </Form.Select>
+                    }
                 </div>
             </div>
             <div className="text-center">
@@ -360,8 +419,20 @@ function TimeTool(props) {
                         type="checkbox"
                         label={t("twelveHourSystem")}
                         checked={is12Hours}
-                        disabled={true} //todo
-                        onChange={(e)=>{setIs12Hours(e.target.checked)}}
+                        onChange={(e)=>{
+                            setIs12Hours(e.target.checked);
+                            if(e.target.checked){
+                                let {hour,am} = convert24To12(ukHour);
+                                setUkHour(hour);
+                                setUkAm(am);
+                                ({hour,am} = convert24To12(hkHour));
+                                setHkHour(hour);
+                                setHkAm(am);
+                            }else{
+                                setUkHour(numberToString(convert12To24(ukHour,ukAm),2));
+                                setHkHour(numberToString(convert12To24(hkHour,hkAm),2));
+                            }
+                        }}
                     />
                     {isFullDate ? 
                         <p className="minor">{t("autoDst")}</p>
@@ -371,7 +442,7 @@ function TimeTool(props) {
                             type="checkbox"
                             label={t("dst")}
                             checked={isDst}
-                            onChange={(e)=>{setIsDst(e.target.checked)}}
+                            onChange={(e)=>{clearTime(); setIsDst(e.target.checked);}}
                         />
                     }
                     
@@ -428,9 +499,9 @@ function TimeTool(props) {
                         type="number"
                         placeholder={is12Hours ?  t("hh") : t("HH")}
                         min={0}
-                        max={23}
+                        max={is12Hours ? 12 : 23}
                         value={hkHour}
-                        onChange={(e)=>{sethkHour(e.target.value)}}
+                        onChange={(e)=>{setHkHour(e.target.value)}}
                     />
                     <label htmlFor="hkMinute">:</label>
                     <input
@@ -441,8 +512,19 @@ function TimeTool(props) {
                         min={0}
                         max={59}
                         value={hkMinute}
-                        onChange={(e)=>{sethkMinute(e.target.value)}}
+                        onChange={(e)=>{setHkMinute(e.target.value)}}
                     />
+                    {is12Hours &&
+                        <Form.Select
+                            id="hkAm"
+                            className="timeSelect d-inline-block"
+                            value={hkAm}
+                            onChange={(e)=>{setHkAm(e.target.value)}}
+                        >
+                            <option value="am">{t("am")}</option>
+                            <option value="pm">{t("pm")}</option>
+                        </Form.Select>
+                    }
                 </div>
             </div>
             <div className="text-center">
