@@ -48,5 +48,9 @@
   "hkt": "HKT",
   "autoDst": "Auto determine DST",
   "errorYear1000": "Year cannot be smaller than 1000",
-  "day": "Day"
+  "year": "Year",
+  "month": "Month",
+  "day": "Day",
+  "hour": "Hour",
+  "minute": "Minute"
 }

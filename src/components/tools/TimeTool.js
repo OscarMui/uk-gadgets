@@ -64,7 +64,7 @@ function TimeTool(props) {
         //"2021-10-31T00:00:00.000+00:00"
         let utcTime = new Date(utcTimeNum);
         return new Date(
-            (isFullDate ? year : utcTime.getUTCFullYear())+"-"+numberToString((isFullDate ? month : utcTime.getUTCMonth()),2)+"-"+numberToString((isFullDate ? day : utcTime.getUTCDate()),2)+"T"+
+            numberToString((isFullDate ? year : utcTime.getUTCFullYear()),4)+"-"+numberToString((isFullDate ? month : utcTime.getUTCMonth()),2)+"-"+numberToString((isFullDate ? day : utcTime.getUTCDate()),2)+"T"+
             numberToString(hour,2)+":"+numberToString(minute,2)+":00.000+00:00"
         );
     }
@@ -88,7 +88,37 @@ function TimeTool(props) {
         return hour+(am=="pm"?12:0);
     }
 
-    const validateDate = (year,month,day) => {
+    const validateInput = (year,month,day,hour,minute) => {
+        if(year==""){
+            toast.error(t("year")+t("isRequired"), {
+                id: "yearEmpty",
+            });
+            return false;
+        }
+        if(month==""){
+            toast.error(t("month")+t("isRequired"), {
+                id: "monthEmpty",
+            });
+            return false;
+        }
+        if(day==""){
+            toast.error(t("day")+t("isRequired"), {
+                id: "dayEmpty",
+            });
+            return false;
+        }
+        if(hour==""){
+            toast.error(t("hour")+t("isRequired"), {
+                id: "hourEmpty",
+            });
+            return false;
+        }
+        if(minute==""){
+            toast.error(t("minute")+t("isRequired"), {
+                id: "minuteEmpty",
+            });
+            return false;
+        }
         if(year<1000){
             toast.error(t("errorYear1000"), {
                 id: "errorYear1000",
@@ -205,7 +235,7 @@ function TimeTool(props) {
 
     const uktToHkt = () => {
         if(isFullDate){
-            if(!validateDate(ukYear,ukMonth,ukDay)) return;
+            if(!validateInput(ukYear,ukMonth,ukDay,ukHour,ukMinute)) return;
         }
         let inputTime = numberToDate(isFullDate,ukYear,ukMonth,ukDay,is12Hours ? convert12To24(ukHour,ukAm) : ukHour,ukMinute);
         let inputTimeNum = inputTime.getTime();
@@ -242,7 +272,7 @@ function TimeTool(props) {
 
     const hktToUkt = () => {
         if(isFullDate){
-            if(!validateDate(hkYear,hkMonth,hkDay)) return;
+            if(!validateInput(hkYear,hkMonth,hkDay,hkHour,hkMinute)) return;
         }
         let inputTime = numberToDate(isFullDate,hkYear,hkMonth,hkDay,is12Hours ? convert12To24(hkHour,ukAm) : hkHour,hkMinute);
         let inputTimeNum = inputTime.getTime();
@@ -360,7 +390,7 @@ function TimeTool(props) {
                         placeholder={t("YYYY")}
                         min={1970}
                         value={ukYear}
-                        onChange={(e)=>{setUkYear(e.target.value)}}
+                        onChange={(e)=>{if(e.target.value<=9999) setUkYear(e.target.value)}}
                     />
                     <label htmlFor="ukMonth">/</label>
                     <input 
@@ -371,7 +401,7 @@ function TimeTool(props) {
                         min={1}
                         max={12}
                         value={ukMonth}
-                        onChange={(e)=>{setUkMonth(e.target.value)}}
+                        onChange={(e)=>{if(e.target.value==""||e.target.value<=12&&e.target.value>=1) setUkMonth(e.target.value)}}
                     />
                     <label htmlFor="ukDay">/</label>
                     <input 
@@ -382,7 +412,7 @@ function TimeTool(props) {
                         min={1}
                         max={31}
                         value={ukDay}
-                        onChange={(e)=>{setUkDay(e.target.value)}}
+                        onChange={(e)=>{if(e.target.value==""||e.target.value<=31&&e.target.value>=1) setUkDay(e.target.value)}}
                     />
                 </div>
                 }
@@ -395,7 +425,7 @@ function TimeTool(props) {
                         min={0}
                         max={is12Hours ? 12 : 23}
                         value={ukHour}
-                        onChange={(e)=>{setUkHour(e.target.value)}}
+                        onChange={(e)=>{if(e.target.value<=(is12Hours ? 12 : 23)&&e.target.value>=0) setUkHour(e.target.value)}}
                     />
                     <label htmlFor="ukMinute">:</label>
                     <input
@@ -406,7 +436,7 @@ function TimeTool(props) {
                         min={0}
                         max={59}
                         value={ukMinute}
-                        onChange={(e)=>{setUkMinute(e.target.value)}}
+                        onChange={(e)=>{if(e.target.value<=59&&e.target.value>=0) setUkMinute(e.target.value)}}
                     />
                     {is12Hours &&
                         <Form.Select
@@ -486,9 +516,10 @@ function TimeTool(props) {
                         className="timeInput"
                         type="number"
                         placeholder={t("YYYY")}
-                        min={1970}
+                        min={1000}
+                        max={9999}
                         value={hkYear}
-                        onChange={(e)=>{setHkYear(e.target.value)}}
+                        onChange={(e)=>{if(e.target.value<=9999) setHkYear(e.target.value)}}
                     />
                     <label htmlFor="hkMonth">/</label>
                     <input 
@@ -499,7 +530,7 @@ function TimeTool(props) {
                         min={1}
                         max={12}
                         value={hkMonth}
-                        onChange={(e)=>{setHkMonth(e.target.value)}}
+                        onChange={(e)=>{if(e.target.value==""||e.target.value<=12&&e.target.value>=1) setHkMonth(e.target.value)}}
                     />
                     <label htmlFor="hkDay">/</label>
                     <input 
@@ -510,7 +541,7 @@ function TimeTool(props) {
                         min={1}
                         max={31}
                         value={hkDay}
-                        onChange={(e)=>{setHkDay(e.target.value)}}
+                        onChange={(e)=>{if(e.target.value==""||e.target.value<=31&&e.target.value>=1) setHkDay(e.target.value)}}
                     />
                     <label htmlFor="hkHour">&nbsp;&nbsp;&nbsp;</label>
                 </div>
@@ -524,7 +555,7 @@ function TimeTool(props) {
                         min={0}
                         max={is12Hours ? 12 : 23}
                         value={hkHour}
-                        onChange={(e)=>{setHkHour(e.target.value)}}
+                        onChange={(e)=>{if(e.target.value<=(is12Hours ? 12 : 23)&&e.target.value>=0) setHkHour(e.target.value)}}
                     />
                     <label htmlFor="hkMinute">:</label>
                     <input
@@ -535,7 +566,7 @@ function TimeTool(props) {
                         min={0}
                         max={59}
                         value={hkMinute}
-                        onChange={(e)=>{setHkMinute(e.target.value)}}
+                        onChange={(e)=>{if(e.target.value<=59&&e.target.value>=0) setHkMinute(e.target.value)}}
                     />
                     {is12Hours &&
                         <Form.Select
