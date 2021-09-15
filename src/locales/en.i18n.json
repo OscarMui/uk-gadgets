@@ -1,5 +1,5 @@
 {
-  "currentLanguage": "EN",
+  "currentLanguage": "中",
   "ukGadgets": "UK Gadgets",
   "introDesc": "Some small tools for Hongkongers that might be useful when studying or working in the UK.",
   "time": "Time",
@@ -16,8 +16,8 @@
   "includeDate": "Include Date",
   "twelveHourSystem": "12-hour System",
   "dst": "DST",
-  "uktToHkt": "UK to HK Time",
-  "hktToUkt": "HK to UK Time",
+  "uktToHkt": "UK to HK",
+  "hktToUkt": "HK to UK",
   "now": "Now",
   "clear": "Clear",
   "thankYou1": "Thank you for using ",

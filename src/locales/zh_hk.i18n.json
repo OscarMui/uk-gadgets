@@ -1,5 +1,5 @@
 {
-  "currentLanguage": "中",
+  "currentLanguage": "EN",
   "ukGadgets": "英國小工具",
   "introDesc": "便利在英國留學或工作的香港人",
   "time": "時間",
@@ -16,8 +16,8 @@
   "includeDate": "包含日期",
   "twelveHourSystem": "12小時制",
   "dst": "夏令時間",
-  "uktToHkt": "英國轉香港時間",
-  "hktToUkt": "香港轉英國時間",
+  "uktToHkt": "英國轉香港",
+  "hktToUkt": "香港轉英國",
   "now": "現時",
   "clear": "清除",
   "thankYou1": "感謝使用",
