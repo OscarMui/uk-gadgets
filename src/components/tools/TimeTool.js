@@ -274,7 +274,7 @@ function TimeTool(props) {
         if(isFullDate){
             if(!validateInput(hkYear,hkMonth,hkDay,hkHour,hkMinute)) return;
         }
-        let inputTime = numberToDate(isFullDate,hkYear,hkMonth,hkDay,is12Hours ? convert12To24(hkHour,ukAm) : hkHour,hkMinute);
+        let inputTime = numberToDate(isFullDate,hkYear,hkMonth,hkDay,is12Hours ? convert12To24(hkHour,hkAm) : hkHour,hkMinute);
         let inputTimeNum = inputTime.getTime();
 
         setHkTimeNum(inputTimeNum);
