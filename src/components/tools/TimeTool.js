@@ -56,7 +56,7 @@ function TimeTool(props) {
     }
 
     const momentToString = (timeNum,isFullDate,is12Hours) => {
-        let momentFormat = (isFullDate ? "ll " : "") + (is12Hours ? (i18n.language=="zh_hk" ? "a h:mm" : "h:mm a") : "HH:mm");
+        let momentFormat = (isFullDate ? "ll " : "") + (is12Hours ? (i18n.language=="zh_hk" ? "A h:mm" : "h:mm A") : "HH:mm");
         return moment(timeNum+new Date().getTimezoneOffset()*60*1000).format(momentFormat);
     }
 
@@ -64,7 +64,7 @@ function TimeTool(props) {
         //"2021-10-31T00:00:00.000+00:00"
         let utcTime = new Date(utcTimeNum);
         return new Date(
-            numberToString((isFullDate ? year : utcTime.getUTCFullYear()),4)+"-"+numberToString((isFullDate ? month : utcTime.getUTCMonth()),2)+"-"+numberToString((isFullDate ? day : utcTime.getUTCDate()),2)+"T"+
+            numberToString((isFullDate ? year : utcTime.getUTCFullYear()),4)+"-"+numberToString((isFullDate ? month : utcTime.getUTCMonth()+1),2)+"-"+numberToString((isFullDate ? day : utcTime.getUTCDate()),2)+"T"+
             numberToString(hour,2)+":"+numberToString(minute,2)+":00.000+00:00"
         );
     }
@@ -366,7 +366,16 @@ function TimeTool(props) {
     }
 
     const clipboardButton =  () => {
-        let text = momentToString(ukTimeNum,isFullDate,is12Hours)+" ("+(isDst?t("bst"):t("utc"))+")\n"+momentToString(hkTimeNum,isFullDate,is12Hours)+" ("+t("hkt")+")";
+        let ukTime = new Date(ukTimeNum);
+        let hkTime = new Date(ukTimeNum);
+        let text = momentToString(ukTimeNum,isFullDate,is12Hours)+" ("+(isDst?t("bst"):t("utc"))+")\n";
+        if(!isFullDate||ukTime.getDate()==hkTime.getDate()&&ukTime.getMonth()==hkTime.getMonth()&&ukTime.getFullYear()==hkTime.getFullYear()){
+            //same date, so only show date once
+            text += momentToString(hkTimeNum,false,is12Hours)+" ("+t("hkt")+")";
+        }else{
+            text += momentToString(hkTimeNum,isFullDate,is12Hours)+" ("+t("hkt")+")";
+        }
+        
         
         navigator.clipboard.writeText(text);
         toast.success(t("successClipboard"), {
@@ -475,15 +484,20 @@ function TimeTool(props) {
                         onChange={(e)=>{
                             setIs12Hours(e.target.checked);
                             if(e.target.checked){
-                                let {hour,am} = convert24To12(ukHour);
-                                setUkHour(hour);
-                                setUkAm(am);
-                                ({hour,am} = convert24To12(hkHour));
-                                setHkHour(hour);
-                                setHkAm(am);
+                                if(ukHour){
+                                    let {hour,am} = convert24To12(ukHour);
+                                    setUkHour(hour);
+                                    setUkAm(am);
+                                }
+                                if(hkHour){
+                                    let {hour,am} = convert24To12(hkHour);
+                                    setHkHour(hour);
+                                    setHkAm(am);
+                                }
+                                
                             }else{
-                                setUkHour(numberToString(convert12To24(ukHour,ukAm),2));
-                                setHkHour(numberToString(convert12To24(hkHour,hkAm),2));
+                                if(ukHour) setUkHour(numberToString(convert12To24(ukHour,ukAm),2));
+                                if(hkHour) setHkHour(numberToString(convert12To24(hkHour,hkAm),2));
                             }
                         }}
                     />
