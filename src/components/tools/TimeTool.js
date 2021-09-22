@@ -144,7 +144,10 @@ function TimeTool(props) {
     useEffect(()=>{
         // window.addEventListener("resize",checkScreenWidth);
 
-        fetch("https://currentmillis.com/time/minutes-since-unix-epoch.php").then((res)=>{ //returns minutes since 1/1/1970
+        fetch("https://currentmillis.com/time/minutes-since-unix-epoch.php",{
+            method: 'GET',
+            cache: "no-store",
+        }).then((res)=>{ //returns minutes since 1/1/1970
             return res.text();
         }).then((docs)=>{
             console.log(docs*60*1000);

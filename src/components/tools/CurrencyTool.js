@@ -28,9 +28,13 @@ function CurrencyTool(props) {
     const [takingScreenshot,setTakingScreenshot] = useState(false);
 
     useEffect(()=>{
-        fetch("https://api.exchangerate.host/latest").then((res)=>{
+        fetch("https://api.exchangerate.host/latest",{
+            method: 'GET',
+            cache: "no-store",
+        }).then((res)=>{
             return res.json();
         }).then((docs)=>{
+            console.log(docs.rates.HKD,docs.rates.GBP);
             console.log(docs.rates.HKD/docs.rates.GBP);
             setExchangeRateFetched(docs.rates.HKD/docs.rates.GBP);
             setExchangeRateDisplayed(Math.round(docs.rates.HKD/docs.rates.GBP*100)/100);
