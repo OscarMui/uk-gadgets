@@ -9,6 +9,7 @@ import CurrencyTool from './components/tools/CurrencyTool'
 import TimeTool from './components/tools/TimeTool';
 
 import './App.scss';
+import { useEffect } from "react";
 
 function App() {
   const {t,i18n} = useTranslation();
@@ -16,16 +17,23 @@ function App() {
   const changeLanguage = () =>{
     if(i18n.language=="en"){
       i18n.changeLanguage("zh_hk");
+      localStorage.setItem("ukGadgetsLanguage","zh_hk");
       moment.locale("zh-hk")
     }else{
       i18n.changeLanguage("en");
+      localStorage.setItem("ukGadgetsLanguage","en");
       moment.locale("en-gb")
     }
   }
+  useEffect(()=>{
+    if(localStorage.getItem("ukGadgetsLanguage")){
+      i18n.changeLanguage(localStorage.getItem("ukGadgetsLanguage"));
+    }
+    if(i18n.language=="en"&&moment.locale()!="en-gb"){
+      moment.locale("en-gb")
+    }
+  },[]);
 
-  if(i18n.language=="en"&&moment.locale()!="en-gb"){
-    moment.locale("en-gb")
-  }
   return (
     <Container>
       <Toaster 
