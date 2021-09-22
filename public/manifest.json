@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "background_color": "black",
+  "description": "Some small tools for Hongkongers that might be useful when studying or working in the UK. 便利在英國留學或工作的香港人。",
+  "display": "standalone",
   "icons": [
     {
       "src": "favicon.ico",
@@ -9,17 +10,16 @@
     },
     {
       "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "type": "image/png"
     },
     {
       "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "name": "UK Gadgets",
+  "short_name": "UK Gadgets",
+  "start_url": "/"
 }
