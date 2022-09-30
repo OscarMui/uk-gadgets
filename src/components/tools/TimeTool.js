@@ -693,9 +693,7 @@ function TimeTool(props) {
             <h2>{t("time")}</h2>
             {isResult ? TimeToolResult() : TimeToolInput() }
             <p className="mt-3 text-center"><small>
-                <span className="minor">{t("thankYou1")}</span>
-                <a href="https://ukgadgets.netlify.app">{t("ukGadgets")}</a>
-                <span className="minor">{t("thankYou2")+t("currentTime")+t("thankYou3")}</span>
+                <span className="minor">{t("currentTime")+t("thankYou3")}</span>
                 <a href="https://currentmillis.com/">currentmills</a>
                 <span className="minor">{t("thankYou4")}</span>
             </small></p>
