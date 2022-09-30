@@ -149,6 +149,9 @@ function TimeTool(props) {
             cache: "no-store",
         }).then((res)=>{ //returns minutes since 1/1/1970
             return res.text();
+        }).catch((err)=>{
+            //use device local time as fallback
+            return Date.now()/60/1000;
         }).then((docs)=>{
             console.log(docs*60*1000);
             let utcTimeNum = docs*60*1000;
