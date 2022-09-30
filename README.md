@@ -6,6 +6,12 @@ Built using React.
 
 ## Installation
 
+**USE node v14.9.0 (npm v6.14.17)**
+
+`nvm use v14.9.0`
+
+`npm install -g npm@6`
+
 Requires Node.js and npm
 
 ```bash
