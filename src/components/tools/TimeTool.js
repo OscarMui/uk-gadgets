@@ -252,7 +252,7 @@ function TimeTool(props) {
         }else{
             isDstLocal = isDst;
         }
-        if(isDst) inputTimeNum-=3600*1000; //+1 to +0
+        if(isDstLocal) inputTimeNum-=3600*1000; //+1 to +0
         inputTimeNum += 8*3600*1000; //+0 to +8
 
         setHkTimeNum(inputTimeNum);

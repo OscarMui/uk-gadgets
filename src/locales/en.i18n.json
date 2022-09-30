@@ -47,7 +47,7 @@
   "edit": "Edit",
   "clipboard": "Clipboard",
   "bst": "BST",
-  "utc": "UTC",
+  "utc": "GMT",
   "hkt": "HKT",
   "autoDst": "Auto determine DST",
   "errorYear1000": "Year cannot be smaller than 1000",
