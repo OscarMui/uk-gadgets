@@ -373,9 +373,9 @@ function TimeTool(props) {
 
     const clipboardButton =  () => {
         let ukTime = new Date(ukTimeNum);
-        let hkTime = new Date(ukTimeNum);
+        let hkTime = new Date(hkTimeNum);
         let text = momentToString(ukTimeNum,isFullDate,is12Hours)+" ("+(isDst?t("bst"):t("utc"))+")\n";
-        if(!isFullDate||ukTime.getDate()==hkTime.getDate()&&ukTime.getMonth()==hkTime.getMonth()&&ukTime.getFullYear()==hkTime.getFullYear()){
+        if(!isFullDate||(ukTime.getUTCDate()==hkTime.getUTCDate()&&ukTime.getUTCMonth()==hkTime.getUTCMonth()&&ukTime.getUTCFullYear()==hkTime.getUTCFullYear())){
             //same date, so only show date once
             text += momentToString(hkTimeNum,false,is12Hours)+" ("+t("hkt")+")";
         }else{
